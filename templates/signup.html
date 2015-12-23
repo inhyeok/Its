@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block title %} 회원가입 {% endblock %}
+
+{% block scripts %}
+  <script type="text/javascript" src="{{url_for('static', filename='js/signup.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+  <div class='row' style='padding-top: 5%;'>
+    <div class='col-sm-4 col-sm-offset-4'>
+      <form id='signupForm' action="{{url_for('signup')}}" method='POST'>
+        <div class='form-group text-center'>
+          <h4>회원가입</h4>
+        </div>
+        <div class='form-group'>
+          <label>이름
+            <i class='required'>*</i>
+          </label>
+          <input type='text' id='name' name='name' class='form-control' />
+        </div>
+        <div class='form-group'>
+          <label>아이디
+            <i class='required'>*</i>
+          </label>
+          <input type='text' id='id' name='id' class='form-control' />
+        </div>
+        <div class='form-group'>
+          <label>비밀번호
+            <span class='text-muted'>(6~12 글자 이내로 작성해주세요.)</span>
+            <i class='required'>*</i>
+          </label>
+          <input type='password' id='pw' name='pw' class='form-control' />
+        </div>
+        <div class='form-group'>
+          <label>비밀번호 확인
+            <i class='required'>*</i>
+          </label>
+          <input type='password' id='pwCheck' name='pwCheck' class='form-control' />
+        </div>
+        <div class='form-group'>
+          <label>휴대번호
+            <span class='text-muted'>('-'을 제외하고 작성해주세요.)</span>
+          </label>
+          <input type='text' id='phone' name='phone' class='form-control' />
+        </div>
+        <div class='form-group'>
+          <label>그룹코드
+            <span class='text-muted'>(그룹코드가 없으시면 가입후 그룹생성을 하시면 됩니다.)</span>
+          </label>
+          <input type='number' min='0' id='group_number' name='group_number' class='form-control' />
+        </div>
+        <div class='form-group'>
+          <button type='submit' class='btn btn-default'>확인</button>
+          <a href='/login' class='btn btn-default pull-right'>뒤로가기</a>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

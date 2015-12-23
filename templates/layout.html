@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="{{url_for('static', filename='bower_components/jquery/dist/jquery.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <script src="{{url_for('static', filename='bower_components/sweetalert/dist/sweetalert.min.js')}}"></script>
+    {% block scripts %}{% endblock %}
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bower_components/sweetalert/dist/sweetalert.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/main.css')}}">
+    {% block styles %}{% endblock %}
+
+  </head>
+  <body>
+    <div id='header' class='header'>
+      <div class='text-center'>
+        <a href='/'>
+          <h3>{{name or 'Team'}}</h3>
+        </a>
+      </div>
+    </div>
+    <div class='content'>
+      {% block content %}
+      {% endblock %}
+    </div>
+  </body>
+</html>
