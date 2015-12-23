@@ -27,11 +27,9 @@ def login():
     pw = request.form['pw']
     s = users.select(users.c.id == id)
     result = s.execute().first()
-    print json.dumps(result)
     if result:
       hash_pw = hashlib.sha1(pw+'enon').hexdigest()
       if result.pw == hash_pw:
-        # session['user'] = json.dumps(result)
         return jsonify({'status': 200, 'message': 'success'})
       else:
         return jsonify({'status': 204, 'message': '비밀번호를 다시 확인해주세요.'})
