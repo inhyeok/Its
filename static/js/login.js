@@ -16,12 +16,12 @@ $(document).ready(function () {
         type: 'POST',
         success: function (req) {
           if(req.status === 200){
-            return true
+            // return true
+            return window.location = '/';
           }
           else if(req.status === 204) {
             sw_alert('error', req.message);
           }
-          // return window.location = '/';
         },
         error: function (err) {
           sw_alert('error', err);

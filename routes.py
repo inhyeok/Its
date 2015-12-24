@@ -4,7 +4,7 @@ from flask import *
 from sqlalchemy import *
 import json, hashlib
 
-app = Flask(__name__, static_url_path='/public')
+app = Flask(__name__)
 db = create_engine('mysql://root@localhost/python_test?charset=utf8&use_unicode=True', echo=True)
 metadata = MetaData(bind=db)
 
@@ -20,6 +20,11 @@ def index():
   else:
     return render_template('lending.html')
 
+@app.route('/<group_number>')
+def main(group_number):
+  print group_number
+  return render_template('index.html')
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   if request.method == 'POST':
@@ -31,8 +36,8 @@ def login():
       hash_pw = hashlib.sha1(pw+'enon').hexdigest()
       if result.pw == hash_pw:
         session['user'] = dict(result)
-        print session
         return jsonify({'status': 200, 'message': 'success'})
+        # return redirect(url_for('index'))
       else:
         return jsonify({'status': 204, 'message': '비밀번호를 다시 확인해주세요.'})
     else:
@@ -42,7 +47,7 @@ def login():
 
 @app.route('/logout')
 def logout():
-  session.pop('users', None)
+  session.pop('user', None)
   return redirect(url_for('login'))
 
 @app.route('/signup', methods=['GET', 'POST', 'PUT'])
