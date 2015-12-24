@@ -30,6 +30,8 @@ def login():
     if result:
       hash_pw = hashlib.sha1(pw+'enon').hexdigest()
       if result.pw == hash_pw:
+        session['user'] = dict(result)
+        print session
         return jsonify({'status': 200, 'message': 'success'})
       else:
         return jsonify({'status': 204, 'message': '비밀번호를 다시 확인해주세요.'})
@@ -38,7 +40,12 @@ def login():
 
   return render_template('login.html')
 
-@app.route('/signup', methods=['GET', 'POST'])
+@app.route('/logout')
+def logout():
+  session.pop('users', None)
+  return redirect(url_for('login'))
+
+@app.route('/signup', methods=['GET', 'POST', 'PUT'])
 def signup():
   if request.method == 'POST':
     name = request.form['name']
