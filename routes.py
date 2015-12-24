@@ -82,7 +82,7 @@ def mktable_users():
         pw VARCHAR(255),
         name VARCHAR(200),
         phone VARCHAR(200),
-        group_number INT(11)
+        group_number INT(11),
         PRIMARY KEY(code)
       ) DEFAULT CHARACTER SET utf8;
     """
