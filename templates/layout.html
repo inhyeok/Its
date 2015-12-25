@@ -18,9 +18,9 @@
   <body>
     <div id='header' class='header'>
       <div class='text-center'>
-        {% if session %}
-          <a href='{{ session.user.group_number }}'>
-            <h3>{{ session.user.group_number }}입니다.</h3>
+        {% if session.group %}
+          <a href='{{ session.group.id }}'>
+            <h3>{{ session.group.name }}</h3>
           </a>
         {% else %}
           <a href='/'>

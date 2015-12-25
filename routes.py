@@ -11,10 +11,10 @@ metadata = MetaData(bind=db)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 users = Table('users', metadata, autoload=True)
+group_list = Table('group_list', metadata, autoload=True)
 
 @app.route('/')
 def index():
-  print session
   if session:
     return render_template('index.html')
   else:
@@ -22,7 +22,6 @@ def index():
 
 @app.route('/<group_number>')
 def main(group_number):
-  print group_number
   return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -31,11 +30,14 @@ def login():
     id = request.form['id']
     pw = request.form['pw']
     s = users.select(users.c.id == id)
-    result = s.execute().first()
-    if result:
+    user = s.execute().first()
+    if user:
       hash_pw = hashlib.sha1(pw+'enon').hexdigest()
-      if result.pw == hash_pw:
-        session['user'] = dict(result)
+      if user.pw == hash_pw:
+        session['user'] = dict(user)
+        s = group_list.select(group_list.c.id == user.group_number)
+        group = s.execute().first()
+        session['group'] = dict(group or {})
         return jsonify({'status': 200, 'message': 'success'})
         # return redirect(url_for('index'))
       else:
@@ -68,6 +70,19 @@ def signup():
     i = users.insert()
     i.execute(name=name, id=id, pw=hash_pw, phone=phone, group_number=group_number)
     return jsonify({'status': 200, 'message': 'success'})
+
+  return render_template('signup.html')
+
+@app.route('/group', methods=['GET', 'POST', 'PUT'])
+def signup():
+  if request.method == 'POST':
+    return jsonify({'status': 200, 'message': 'success', 'item': item})
+  if request.message == 'PUT':
+    return jsonify({'status': 200, 'message': 'success'})
+
+  id = request.data.id
+  s = group.select(group.c.id == id)
+  item = s.execute()
 
   return render_template('signup.html')
 
