@@ -8,7 +8,7 @@ app = Flask(__name__)
 db = create_engine('mysql://root@localhost/python_test?charset=utf8&use_unicode=True', echo=True)
 metadata = MetaData(bind=db)
 
-app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+app.secret_key = 'I12am34ITS56by78Enon'
 
 users = Table('users', metadata, autoload=True)
 group_list = Table('group_list', metadata, autoload=True)
@@ -17,11 +17,10 @@ group_list = Table('group_list', metadata, autoload=True)
 def index():
   if session:
     return render_template('index.html')
-  else:
-    return render_template('lending.html')
+  return render_template('lending.html')
 
-@app.route('/<group_number>')
-def main(group_number):
+@app.route('/<group_name>')
+def main(group_name):
   return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -50,6 +49,7 @@ def login():
 @app.route('/logout')
 def logout():
   session.pop('user', None)
+  session.pop('group', None)
   return redirect(url_for('login'))
 
 @app.route('/signup', methods=['GET', 'POST', 'PUT'])
@@ -73,19 +73,6 @@ def signup():
 
   return render_template('signup.html')
 
-@app.route('/group', methods=['GET', 'POST', 'PUT'])
-def signup():
-  if request.method == 'POST':
-    return jsonify({'status': 200, 'message': 'success', 'item': item})
-  if request.message == 'PUT':
-    return jsonify({'status': 200, 'message': 'success'})
-
-  id = request.data.id
-  s = group.select(group.c.id == id)
-  item = s.execute()
-
-  return render_template('signup.html')
-
 @app.route('/mktable/users')
 def mktable_users():
   conn = db.connect()
@@ -103,6 +90,10 @@ def mktable_users():
     """
   )
   conn.close()
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
 
 if __name__ == '__main__':
 	app.run(port=9090, debug=True)

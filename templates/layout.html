@@ -19,7 +19,7 @@
     <div id='header' class='header'>
       <div class='text-center'>
         {% if session.group %}
-          <a href='{{ session.group.id }}'>
+          <a href='/{{ session.group.name }}'>
             <h3>{{ session.group.name }}</h3>
           </a>
         {% else %}

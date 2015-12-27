@@ -7,8 +7,16 @@
 
 {% block content %}
   <div class='row'>
+    <div class='col-sm-8' style='height: 500px;'>
+      <h1>캘린더가 들어감</h1>
+    </div>
+    <div class='col-sm-4' style='height: 250px;'>
+      <h1>메모가 들어감</h1>
+    </div>
+    <div class='col-sm-4' style='height: 250px;'>
+      <h1>채팅이 들어감</h1>
+    </div>
     <div class='col-sm-12 text-center'>
-      <h1>인덱스 페이지!!!!!!!!!</h1>
       <p>{{ session.user }}</p>
       <p>{{ session.group }}</p>
       <a href="{{url_for('logout')}}">로그아웃</a>
