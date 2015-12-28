@@ -7,19 +7,20 @@
 
 {% block content %}
   <div class='row'>
-    <div class='col-sm-8' style='height: 500px;'>
-      <h1>캘린더가 들어감</h1>
+    <div class='col-sm-7'>
+      <div id='calendar'></div>
     </div>
-    <div class='col-sm-4' style='height: 250px;'>
+    <div class='col-sm-5' style='height: 250px;'>
       <h1>오늘의 스케줄</h1>
     </div>
-    <div class='col-sm-4' style='height: 250px;'>
+    <div class='col-sm-5' style='height: 250px;'>
       <h1>채팅이 들어감</h1>
     </div>
     <div class='col-sm-12 text-center'>
       <p>{{ session.user }}</p>
       <p>{{ session.group }}</p>
       <a href="{{url_for('logout')}}">로그아웃</a>
+      <button id='getEvents'>이벤트가져오기</button>
     </div>
   </div>
 {% endblock %}
