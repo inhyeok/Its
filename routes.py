@@ -12,6 +12,7 @@ app.secret_key = 'I12am34ITS56by78Enon'
 
 users = Table('users', metadata, autoload=True)
 group_list = Table('group_list', metadata, autoload=True)
+event_list = Table('events', metadata, autoload=True)
 
 @app.route('/')
 def index():
@@ -72,6 +73,23 @@ def signup():
     return jsonify({'status': 200, 'message': 'success'})
 
   return render_template('signup.html')
+
+@app.route('/events', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def events():
+  if request.method == 'POST':
+    return True
+  elif request.method == 'PUT':
+    return True
+  elif request.method == 'DELETE':
+    return True
+  print request
+  s = event_list.select()
+  result = s.execute()
+  # for item in result:
+  #   print item
+  print '>>>'
+  print result
+  return jsonify({'status': 200, 'message': '성공'})
 
 @app.route('/mktable/users')
 def mktable_users():
