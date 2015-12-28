@@ -34,10 +34,16 @@ def login():
     if user:
       hash_pw = hashlib.sha1(pw+'enon').hexdigest()
       if user.pw == hash_pw:
+        group_users = []
         session['user'] = dict(user)
-        s = group_list.select(group_list.c.id == user.group_number)
+        s = group_list.select(group_list.c.id == user.group_id)
         group = s.execute().first()
         session['group'] = dict(group or {})
+        s = users.select(session['group']['id'] == user.group_id)
+        group_users_result = s.execute()
+        for item in group_users_result:
+          group_users.append(dict(item))
+        session['group_users'] = group_users
         return jsonify({'status': 200, 'message': 'success'})
         # return redirect(url_for('index'))
       else:
@@ -60,7 +66,7 @@ def signup():
     id = request.form['id']
     pw = request.form['pw']
     phone = request.form['phone']
-    group_number = request.form['group_number'] or 0
+    group_id = request.form['group_id'] or 0
 
     s = users.select()
     result = s.execute()
@@ -69,7 +75,7 @@ def signup():
         return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
     hash_pw = hashlib.sha1(pw+'enon').hexdigest()
     i = users.insert()
-    i.execute(name=name, id=id, pw=hash_pw, phone=phone, group_number=group_number)
+    i.execute(name=name, id=id, pw=hash_pw, phone=phone, group_id=group_id)
     return jsonify({'status': 200, 'message': 'success'})
 
   return render_template('signup.html')
@@ -83,13 +89,12 @@ def events():
   elif request.method == 'DELETE':
     return True
   print request
-  s = event_list.select()
+  s = event_list.select(session['group']['id'] == event_list.c.group_id)
   result = s.execute()
-  # for item in result:
-  #   print item
-  print '>>>'
-  print result
-  return jsonify({'status': 200, 'message': '성공'})
+  event_items = []
+  for item in result:
+    event_items.append(dict(item))
+  return jsonify({'status': 200, 'message': '성공', 'items': event_items})
 
 @app.route('/mktable/users')
 def mktable_users():
@@ -102,7 +107,7 @@ def mktable_users():
         pw VARCHAR(255),
         name VARCHAR(200),
         phone VARCHAR(200),
-        group_number INT(11),
+        group_id INT(11),
         PRIMARY KEY(code)
       ) DEFAULT CHARACTER SET utf8;
     """

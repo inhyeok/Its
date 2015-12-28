@@ -19,6 +19,7 @@
     <div class='col-sm-12 text-center'>
       <p>{{ session.user }}</p>
       <p>{{ session.group }}</p>
+      <p>{{ session.group_users }}</p>
       <a href="{{url_for('logout')}}">로그아웃</a>
       <button id='getEvents'>이벤트가져오기</button>
     </div>
