@@ -9,14 +9,22 @@ $(document).ready(function () {
             success: function (req) {
               if(req.status === 200) {
                 var events = [];
-                // $(req).find('items').each(function (item) {
-                // $.each(req.items, function (item) {
                 for(i in req.items) {
+                  var start = moment(req.items[i].started_at).format('YYYY-MM-DD');
+                  var end = moment(req.items[i].finished_at).format('YYYY-MM-DD');
+
+                  if(start === end) {
+                    var title = moment(start).format('HH:mm') + '~' + moment(end).format('HH:mm') + '  ' + req.items[i].title;
+                  }
+                  else {
+                    var title = moment(start).format('YYYY-MM-DD') + '~' + moment(end).format('YYYY-MM-DD') + '  ' + req.items[i].title;
+                  }
+                  console.log(moment(start).format('YYYY-MM-DD'), end, title);
                   events.push({
-                    title: req.items[i].title,
+                    title: title,
                     content: req.items[i].content,
-                    start: moment(req.items[i].started_at).format('YYYY-MM-DD'),
-                    end: moment(req.items[i].finished_at).format('YYYY-MM-DD')
+                    start: start,
+                    end: end
                   })
                 }
                 return c(events);
