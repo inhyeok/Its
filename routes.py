@@ -20,10 +20,6 @@ def index():
     return render_template('index.html')
   return render_template('lending.html')
 
-@app.route('/<group_name>')
-def main(group_name):
-  return render_template('index.html')
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
   if request.method == 'POST':

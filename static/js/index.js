@@ -19,7 +19,6 @@ $(document).ready(function () {
                   else {
                     var title = moment(start).format('YYYY-MM-DD') + '~' + moment(end).format('YYYY-MM-DD') + '  ' + req.items[i].title;
                   }
-                  console.log(moment(start).format('YYYY-MM-DD'), end, title);
                   events.push({
                     title: title,
                     content: req.items[i].content,
