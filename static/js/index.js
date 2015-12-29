@@ -23,7 +23,8 @@ $(document).ready(function () {
                     title: title,
                     content: req.items[i].content,
                     start: start,
-                    end: end
+                    end: end,
+                    color: req.items[i].color
                   })
                 }
                 return c(events);
