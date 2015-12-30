@@ -13,7 +13,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">이벤트 수정</h4>
         </div>
-        <form class='form-horizontal' id='eventUpdate'>
+        <form class='form-horizontal' id='eventUpdate' action="{{url_for('events')}}" method='PUT'>
           <div class="modal-body row" style='padding: 20px 40px;'>
               <div class='form-group'>
                 <label class='col-sm-2'>제목</label>
@@ -73,12 +73,12 @@
     <div class='col-sm-5' style='height: 250px;'>
       <h1>채팅이 들어감</h1>
     </div>
-    <div class='col-sm-12 text-center'>
+    <!-- <div class='col-sm-12 text-center'>
       <p>{{ session.user }}</p>
       <p>{{ session.group }}</p>
       <p>{{ session.group_users }}</p>
       <a href="{{url_for('logout')}}">로그아웃</a>
-      <button id='getEvents'>이벤트가져오기</button>
-    </div>
+    </div> -->
+    <button id='getEvents'>이벤트가져오기</button>
   </div>
 {% endblock %}

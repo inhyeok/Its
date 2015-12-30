@@ -12,7 +12,7 @@ app.secret_key = 'I12am34ITS56by78Enon'
 
 users = Table('users', metadata, autoload=True)
 group_list = Table('group_list', metadata, autoload=True)
-event_list = Table('events', metadata, autoload=True)
+event_list = Table('event_list', metadata, autoload=True)
 
 @app.route('/')
 def index():
@@ -78,15 +78,14 @@ def signup():
 
 @app.route('/events', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def events():
+  print request.method
   if request.method == 'POST':
     return True
 
   elif request.method == 'PUT':
-    print request.form
     item = request.form
-    u = update(events).where(events.c.id == item.id).values(title=item.event_title, content=item.event_content, started_at=item.event_start, finished_at=item.event_finish,color= item.event_color,updated_at= NOW())
-    result = u.execute()
-    print result
+    u = event_list.update(event_list.c.id == item['event_id'])
+    u.execute(title=item['event_title'], content=item['event_content'], started_at=item['event_start'], finished_at=item['event_finish'], color= item['event_color'], updated_at= 'NOW()')
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'DELETE':
