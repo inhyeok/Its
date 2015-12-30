@@ -1,5 +1,6 @@
 $(document).ready(function () {
   $('#calendar').fullCalendar({
+    schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
     eventSources: [
       {
         events: function (s,e,t,c) {
@@ -39,6 +40,12 @@ $(document).ready(function () {
     ],
     dayClick: function (date) {
       alert(moment(date).format('YYYY-MM-DD'));
+    },
+    eventClick: function (e) {
+      $('#eventTitle').focus();
+      // console.log($('#eventTitle'));
+      $('#myModal').modal('show')
+      // alert(JSON.stringify(e));
     }
   });
   $('#getEvents').on('click', function () {
