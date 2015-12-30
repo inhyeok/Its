@@ -80,11 +80,18 @@ def signup():
 def events():
   if request.method == 'POST':
     return True
+
   elif request.method == 'PUT':
-    return True
+    print request.form
+    item = request.form
+    u = update(events).where(events.c.id == item.id).values(title=item.event_title, content=item.event_content, started_at=item.event_start, finished_at=item.event_finish,color= item.event_color,updated_at= NOW())
+    result = u.execute()
+    print result
+    return jsonify({'status': 200, 'message': '성공'})
+
   elif request.method == 'DELETE':
     return True
-  print request
+
   s = event_list.select(session['group']['id'] == event_list.c.group_id)
   result = s.execute()
   event_items = []
