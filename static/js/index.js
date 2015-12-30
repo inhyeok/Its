@@ -5,6 +5,9 @@ $(document).ready(function () {
     // events: {
     //   googleCalendarId: 'm8relal0t9dsp6nrhjcpgpojc0@group.calendar.google.com'
     // },
+    editable: true,
+    eventStartEditable: true,
+    eventDurationEditable: true,
     eventSources: [
       {
         events: function (s,e,t,c) {
