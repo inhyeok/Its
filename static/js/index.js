@@ -2,12 +2,12 @@ $(document).ready(function () {
   $('#calendar').fullCalendar({
     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
     // googleCalendarApiKey: 'AIzaSyCxuLEwSrp8wC4y5uu6qm-L_mXeouAPWgs',
-    // events: {
-    //   googleCalendarId: 'm8relal0t9dsp6nrhjcpgpojc0@group.calendar.google.com'
-    // },
+    // googleCalendarId: 'm8relal0t9dsp6nrhjcpgpojc0@group.calendar.google.com',
     editable: true,
+    resizeable: true,
     eventStartEditable: true,
     eventDurationEditable: true,
+    slotEventOverlap: false,
     eventSources: [
       {
         events: function (s,e,t,c) {
@@ -49,6 +49,19 @@ $(document).ready(function () {
       $('#eventFinish').val(moment(e.end).format('YYYY-MM-DD HH:mm'));
       $('#eventColor').val(e.color);
       $('#myModal').modal('show');
+    },
+    eventResizeStart: function (event, jsEvent, ui, view) {
+      console.log('RESIZE START ' + event.title);
+
+    },
+    eventResizeStop: function (event, jsEvent, ui, view) {
+      console.log('RESIZE STOP ' + event.title);
+    },
+    eventResize: function (event, delta, revertFunc) {
+      alert('dfdfdfdf');
+      if(!confirm('is this okay??')){
+        revertFunc();
+      }
     }
   });
 
