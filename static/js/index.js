@@ -3,6 +3,11 @@ $(document).ready(function () {
     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
     // googleCalendarApiKey: 'AIzaSyCxuLEwSrp8wC4y5uu6qm-L_mXeouAPWgs',
     // googleCalendarId: 'm8relal0t9dsp6nrhjcpgpojc0@group.calendar.google.com',
+    header: {
+      left: 'prev,next today',
+      center: 'title',
+      right: 'month,agendaWeek,agendaDay'
+    },
     editable: true,
     resizeable: true,
     eventStartEditable: true,
@@ -38,10 +43,12 @@ $(document).ready(function () {
       }
     ],
     dayClick: function (date) {
-      alert(moment(date).format('YYYY-MM-DD'));
+      // alert(moment(date).format('YYYY-MM-DD'));
+      $('#myModal .form-control').val('');
+      $('#eventStart').val(moment(date).format('YYYY-MM-DD HH:mm'));
+      $('#myModal').modal('show');
     },
     eventClick: function (e) {
-      console.log(e);
       $('#eventId').val(e.id);
       $('#eventTitle').val(e.title);
       $('#eventContent').val(e.content);
@@ -49,19 +56,57 @@ $(document).ready(function () {
       $('#eventFinish').val(moment(e.end).format('YYYY-MM-DD HH:mm'));
       $('#eventColor').val(e.color);
       $('#myModal').modal('show');
+      // for(var i = 0; i < $('#eventUpdateColors > svg > rect').length; i++){
+      //   console.log($('#eventUpdateColors > svg > rect')[i]);
+      //   if($('#eventColor').val() === ){
+      //     console.log('dddd');
+      //     break;
+      //   }
+      // }
     },
-    eventResizeStart: function (event, jsEvent, ui, view) {
-      console.log('RESIZE START ' + event.title);
+    eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
 
     },
-    eventResizeStop: function (event, jsEvent, ui, view) {
-      console.log('RESIZE STOP ' + event.title);
-    },
     eventResize: function (event, delta, revertFunc) {
-      alert('dfdfdfdf');
-      if(!confirm('is this okay??')){
-        revertFunc();
-      }
+      console.log(event, delta);
+      swal({
+        title: "변경하시겠습니까?",
+        text: "확인을 누르시면 적용이 됩니다.",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonText: "확인",
+        closeOnConfirm: false
+      }, function (value) {
+        if(!value) revertFunc();
+        else {
+          event_data = {
+            id: event.id,
+            title: event.title,
+            content: event.content,
+            started_at: moment(event.start).format('YYYY-MM-DD HH:mm'),
+            finished_at: moment(event.end).format('YYYY-MM-DD HH:mm')
+          }
+          $.ajax({
+            url: '/events',
+            type: 'PUT',
+            data: event_data,
+            success: function (req) {
+              console.log(req);
+              if(req.status === 200){
+                sw_alert('success', req.message);
+                $('#myModal').modal('hide');
+                return true
+              }
+              else {
+                sw_alert('error', req.message);
+              }
+            },
+            error: function (err) {
+              console.log(err);
+            }
+          });
+        }
+      });
     }
   });
 
