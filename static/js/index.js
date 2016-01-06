@@ -1,8 +1,7 @@
 $(document).ready(function () {
   $('#calendar').fullCalendar({
     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-    // googleCalendarApiKey: 'AIzaSyCxuLEwSrp8wC4y5uu6qm-L_mXeouAPWgs',
-    // googleCalendarId: 'm8relal0t9dsp6nrhjcpgpojc0@group.calendar.google.com',
+    googleCalendarApiKey: 'AIzaSyCxuLEwSrp8wC4y5uu6qm-L_mXeouAPWgs',
     header: {
       left: 'prev,next today',
       center: 'title',
@@ -13,35 +12,38 @@ $(document).ready(function () {
     eventStartEditable: true,
     eventDurationEditable: true,
     slotEventOverlap: false,
-    eventSources: [
-      {
-        events: function (s,e,t,c) {
-          $.ajax({
-            url: '/events',
-            type: 'GET',
-            success: function (req) {
-              if(req.status === 200) {
-                var events = [];
-                for(i in req.items) {
-                  events.push({
-                    id: req.items[i].id,
-                    title: req.items[i].title,
-                    content: req.items[i].content,
-                    start: req.items[i].started_at,
-                    end: req.items[i].finished_at,
-                    color: req.items[i].color
-                  })
-                }
-                return c(events);
-              }
-            },
-            error: function (err) {
-              console.log(err);
-            }
-          });
-        }
-      }
-    ],
+    events: {
+      googleCalendarId: 'm8relal0t9dsp6nrhjcpgpojc0@group.calendar.google.com'
+    },
+    // eventSources: [
+    //   {
+    //     events: function (s,e,t,c) {
+    //       $.ajax({
+    //         url: '/events',
+    //         type: 'GET',
+    //         success: function (req) {
+    //           if(req.status === 200) {
+    //             var events = [];
+    //             for(i in req.items) {
+    //               events.push({
+    //                 id: req.items[i].id,
+    //                 title: req.items[i].title,
+    //                 content: req.items[i].content,
+    //                 start: req.items[i].started_at,
+    //                 end: req.items[i].finished_at,
+    //                 color: req.items[i].color
+    //               })
+    //             }
+    //             return c(events);
+    //           }
+    //         },
+    //         error: function (err) {
+    //           console.log(err);
+    //         }
+    //       });
+    //     }
+    //   }
+    // ],
     dayClick: function (date) {
       // alert(moment(date).format('YYYY-MM-DD'));
       $('#myModal .form-control').val('');
@@ -49,12 +51,14 @@ $(document).ready(function () {
       $('#myModal').modal('show');
     },
     eventClick: function (e) {
+      console.log(e);
       $('#eventId').val(e.id);
       $('#eventTitle').val(e.title);
-      $('#eventContent').val(e.content);
+      // $('#eventContent').val(e.content);
       $('#eventStart').val(moment(e.start).format('YYYY-MM-DD HH:mm'));
       $('#eventFinish').val(moment(e.end).format('YYYY-MM-DD HH:mm'));
       $('#eventColor').val(e.color);
+      $('#eventUpdateLink a').attr('href', e.url);
       $('#myModal').modal('show');
       // for(var i = 0; i < $('#eventUpdateColors > svg > rect').length; i++){
       //   console.log($('#eventUpdateColors > svg > rect')[i]);
