@@ -7,6 +7,7 @@ $(document).ready(function () {
       center: 'title',
       right: 'month,agendaWeek,agendaDay'
     },
+    lang: 'ko',
     editable: true,
     resizeable: true,
     eventStartEditable: true,
@@ -69,7 +70,7 @@ $(document).ready(function () {
       // }
     },
     eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
-
+      console.log(event);
     },
     eventResize: function (event, delta, revertFunc) {
       console.log(event, delta);
@@ -113,7 +114,6 @@ $(document).ready(function () {
       });
     }
   });
-
   $('#eventUpdate').on('submit', function () {
     $this = $(this);
     if(!moment($this.find($('#eventStart')).val(), 'YYYY-MM-DD HH:mm', true).isValid() || !moment($this.find($('#eventFinish')).val(), 'YYYY-MM-DD HH:mm', true).isValid()){
