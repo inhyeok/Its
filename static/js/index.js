@@ -1,7 +1,10 @@
 $(document).ready(function () {
   $('#calendar').fullCalendar({
     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
-    googleCalendarApiKey: 'AIzaSyCxuLEwSrp8wC4y5uu6qm-L_mXeouAPWgs',
+    // googleCalendarApiKey: 'AIzaSyCxuLEwSrp8wC4y5uu6qm-L_mXeouAPWgs',
+    // events: {
+    //   googleCalendarId: 'm8relal0t9dsp6nrhjcpgpojc0@group.calendar.google.com'
+    // },
     header: {
       left: 'prev,next today',
       center: 'title',
@@ -13,38 +16,35 @@ $(document).ready(function () {
     eventStartEditable: true,
     eventDurationEditable: true,
     slotEventOverlap: false,
-    events: {
-      googleCalendarId: 'm8relal0t9dsp6nrhjcpgpojc0@group.calendar.google.com'
-    },
-    // eventSources: [
-    //   {
-    //     events: function (s,e,t,c) {
-    //       $.ajax({
-    //         url: '/events',
-    //         type: 'GET',
-    //         success: function (req) {
-    //           if(req.status === 200) {
-    //             var events = [];
-    //             for(i in req.items) {
-    //               events.push({
-    //                 id: req.items[i].id,
-    //                 title: req.items[i].title,
-    //                 content: req.items[i].content,
-    //                 start: req.items[i].started_at,
-    //                 end: req.items[i].finished_at,
-    //                 color: req.items[i].color
-    //               })
-    //             }
-    //             return c(events);
-    //           }
-    //         },
-    //         error: function (err) {
-    //           console.log(err);
-    //         }
-    //       });
-    //     }
-    //   }
-    // ],
+    eventSources: [
+      {
+        events: function (s,e,t,c) {
+          $.ajax({
+            url: '/events',
+            type: 'GET',
+            success: function (req) {
+              if(req.status === 200) {
+                var events = [];
+                for(i in req.items) {
+                  events.push({
+                    id: req.items[i].id,
+                    title: req.items[i].title,
+                    content: req.items[i].content,
+                    start: req.items[i].started_at,
+                    end: req.items[i].finished_at,
+                    color: req.items[i].color
+                  })
+                }
+                return c(events);
+              }
+            },
+            error: function (err) {
+              console.log(err);
+            }
+          });
+        }
+      }
+    ],
     dayClick: function (date) {
       // alert(moment(date).format('YYYY-MM-DD'));
       $('#myModal .form-control').val('');
@@ -55,7 +55,7 @@ $(document).ready(function () {
       console.log(e);
       $('#eventId').val(e.id);
       $('#eventTitle').val(e.title);
-      // $('#eventContent').val(e.content);
+      $('#eventContent').val(e.content);
       $('#eventStart').val(moment(e.start).format('YYYY-MM-DD HH:mm'));
       $('#eventFinish').val(moment(e.end).format('YYYY-MM-DD HH:mm'));
       $('#eventColor').val(e.color);
@@ -70,10 +70,34 @@ $(document).ready(function () {
       // }
     },
     eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
-      console.log(event);
+      item = {
+        id: event.id,
+        title: event.title,
+        content: event.content,
+        started_at: moment(event.start).format('YYYY-MM-DD HH:mm'),
+        finished_at: moment(event.end).format('YYYY-MM-DD HH:mm'),
+        color: event.color
+      }
+      $.ajax({
+        url: '/events',
+        type: 'PUT',
+        data: item,
+        success: function (req) {
+          console.log(req);
+          if(req.status === 200){
+            sw_alert('success', req.message);
+            return true
+          }
+          else {
+            sw_alert('error', req.message);
+          }
+        },
+        error: function (err) {
+          console.log(err);
+        }
+      });
     },
     eventResize: function (event, delta, revertFunc) {
-      console.log(event, delta);
       swal({
         title: "변경하시겠습니까?",
         text: "확인을 누르시면 적용이 됩니다.",
@@ -84,17 +108,18 @@ $(document).ready(function () {
       }, function (value) {
         if(!value) revertFunc();
         else {
-          event_data = {
+          item = {
             id: event.id,
             title: event.title,
             content: event.content,
             started_at: moment(event.start).format('YYYY-MM-DD HH:mm'),
-            finished_at: moment(event.end).format('YYYY-MM-DD HH:mm')
+            finished_at: moment(event.end).format('YYYY-MM-DD HH:mm'),
+            color: event.color
           }
           $.ajax({
             url: '/events',
             type: 'PUT',
-            data: event_data,
+            data: item,
             success: function (req) {
               console.log(req);
               if(req.status === 200){

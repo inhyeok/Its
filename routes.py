@@ -84,8 +84,8 @@ def events():
 
   elif request.method == 'PUT':
     item = request.form
-    u = event_list.update(event_list.c.id == item['event_id'])
-    u.execute(title=item['event_title'], content=item['event_content'], started_at=item['event_start'], finished_at=item['event_finish'], color= item['event_color'], updated_at= 'NOW()')
+    u = event_list.update(event_list.c.id == item['id'])
+    u.execute(title=item['title'], content=item['content'], started_at=item['started_at'], finished_at=item['finished_at'], color= item['color'], updated_at= 'NOW()')
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'DELETE':
