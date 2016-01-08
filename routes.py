@@ -98,23 +98,36 @@ def events():
     event_items.append(dict(item))
   return jsonify({'status': 200, 'message': '성공', 'items': event_items})
 
-@app.route('/mktable/users')
-def mktable_users():
-  conn = db.connect()
-  conn.execute(
-    """
-      CREATE TABLE users (
-        code INT(11) AUTO_INCREMENT,
-        id VARCHAR(255),
-        pw VARCHAR(255),
-        name VARCHAR(200),
-        phone VARCHAR(200),
-        group_id INT(11),
-        PRIMARY KEY(code)
-      ) DEFAULT CHARACTER SET utf8;
-    """
-  )
-  conn.close()
+@app.route('/users', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def users():
+  if request.method == 'POST':
+    return True
+
+  elif request.method == 'PUT':
+    return True
+
+  elif request.method == 'DELETE':
+    return True
+
+  return render_template('user.html')
+
+# @app.route('/mktable/users')
+# def mktable_users():
+#   conn = db.connect()
+#   conn.execute(
+#     """
+#       CREATE TABLE users (
+#         code INT(11) AUTO_INCREMENT,
+#         id VARCHAR(255),
+#         pw VARCHAR(255),
+#         name VARCHAR(200),
+#         phone VARCHAR(200),
+#         group_id INT(11),
+#         PRIMARY KEY(code)
+#       ) DEFAULT CHARACTER SET utf8;
+#     """
+#   )
+#   conn.close()
 
 @app.errorhandler(404)
 def page_not_found(error):
