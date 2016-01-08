@@ -47,7 +47,6 @@ $(document).ready(function () {
       }
     ],
     dayClick: function (date) {
-      // alert(moment(date).format('YYYY-MM-DD'));
       $('#myModal .form-control').val('');
       $('#eventStart').val(moment(date).format('YYYY-MM-DD HH:mm'));
       $('#myModal').modal('show');
@@ -99,47 +98,36 @@ $(document).ready(function () {
       });
     },
     eventResize: function (event, delta, revertFunc) {
-      swal({
-        title: "변경하시겠습니까?",
-        text: "확인을 누르시면 적용이 됩니다.",
-        type: "warning",
-        showCancelButton: true,
-        confirmButtonText: "확인",
-        closeOnConfirm: false
-      }, function (value) {
-        if(!value) revertFunc();
-        else {
-          item = {
-            id: event.id,
-            title: event.title,
-            content: event.content,
-            started_at: moment(event.start).format('YYYY-MM-DD HH:mm'),
-            finished_at: moment(event.end).format('YYYY-MM-DD HH:mm'),
-            color: event.color
+      item = {
+        id: event.id,
+        title: event.title,
+        content: event.content,
+        started_at: moment(event.start).format('YYYY-MM-DD HH:mm'),
+        finished_at: moment(event.end).format('YYYY-MM-DD HH:mm'),
+        color: event.color
+      }
+      $.ajax({
+        url: '/events',
+        type: 'PUT',
+        data: item,
+        success: function (req) {
+          console.log(req);
+          if(req.status === 200){
+            sw_alert('success', req.message);
+            $('#myModal').modal('hide');
+            return true
           }
-          $.ajax({
-            url: '/events',
-            type: 'PUT',
-            data: item,
-            success: function (req) {
-              console.log(req);
-              if(req.status === 200){
-                sw_alert('success', req.message);
-                $('#myModal').modal('hide');
-                return true
-              }
-              else {
-                sw_alert('error', req.message);
-              }
-            },
-            error: function (err) {
-              console.log(err);
-            }
-          });
+          else {
+            sw_alert('error', req.message);
+          }
+        },
+        error: function (err) {
+          console.log(err);
         }
       });
     }
   });
+
   $('#eventUpdate').on('submit', function () {
     $this = $(this);
     if(!moment($this.find($('#eventStart')).val(), 'YYYY-MM-DD HH:mm', true).isValid() || !moment($this.find($('#eventFinish')).val(), 'YYYY-MM-DD HH:mm', true).isValid()){
@@ -195,7 +183,8 @@ $(document).ready(function () {
     swal({
       title: type,
       type: type,
-      text: message
+      text: message,
+      timer: 700
     });
   }
 
