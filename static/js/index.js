@@ -30,6 +30,7 @@ $(document).ready(function () {
                     id: req.items[i].id,
                     title: req.items[i].title,
                     content: req.items[i].content,
+                    allDay: req.items[i].all_day,
                     start: req.items[i].started_at,
                     end: req.items[i].finished_at,
                     color: req.items[i].color
