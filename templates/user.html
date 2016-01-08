@@ -10,13 +10,12 @@
 
 {% block content %}
   <div class='row' id='userBox'>
-    <div class='col-sm-4'>
-      <h4>{{ session.user.id }}</h4>
-      <h4>{{ session.user.name }}</h4>
-      <p>{{ session.user }}</p>
-    </div>
-    <div class='col-sm-8'>
-      <p>{{ session.group_users }}</p>
-    </div>
+    {% for item in session.group_users %}
+      <div class='col-sm-4' id='userItem'>
+        <h4>{{ item.name }}</h4>
+        <h4>{{ item.id }}</h4>
+        <h4>{{ item.phone or '연락처 없음' }}</h4>
+      </div>
+    {% endfor %}
   </div>
 {% endblock %}

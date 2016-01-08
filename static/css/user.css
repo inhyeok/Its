@@ -1,3 +1,7 @@
 #userBox {
   margin: 25px 50px;
 }
+
+#userItem {
+  overflow: auto;
+}
