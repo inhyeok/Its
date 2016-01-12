@@ -64,11 +64,13 @@ def signup():
     phone = request.form['phone']
     group_id = request.form['group_id'] or 0
 
-    s = users.select()
+    s = users.select(users.c.id == id)
     result = s.execute()
-    for item in result:
-      if id == item.id:
-        return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
+    # for item in result:
+    #   if id == item.id:
+    #     return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
+    if result:
+      return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
     hash_pw = hashlib.sha1(pw+'enon').hexdigest()
     i = users.insert()
     i.execute(name=name, id=id, pw=hash_pw, phone=phone, group_id=group_id)
