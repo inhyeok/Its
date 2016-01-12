@@ -49,6 +49,7 @@ $(document).ready(function () {
     dayClick: function (date) {
       $('#myModal .form-control').val('');
       $('#eventStart').val(moment(date).format('YYYY-MM-DD HH:mm'));
+      $('#eventMethod').val('POST');
       $('#myModal').modal('show');
     },
     eventClick: function (e) {
@@ -59,7 +60,7 @@ $(document).ready(function () {
       $('#eventStart').val(moment(e.start).format('YYYY-MM-DD HH:mm'));
       $('#eventFinish').val(moment(e.end).format('YYYY-MM-DD HH:mm'));
       $('#eventColor').val(e.color);
-      $('#eventUpdateLink a').attr('href', e.url);
+      $('#eventMethod').val('PUT')
       $('#myModal').modal('show');
       // for(var i = 0; i < $('#eventUpdateColors > svg > rect').length; i++){
       //   console.log($('#eventUpdateColors > svg > rect')[i]);
@@ -134,9 +135,10 @@ $(document).ready(function () {
       sw_alert('error', '시간 입력 형식을 다시 확인해주세요.');
       return false
     }
+    console.log($('#eventMethod').val());
     $.ajax({
       url: '/events',
-      type: 'PUT',
+      type: $('#eventMethod').val(),
       data: $this.serialize(),
       success: function (req) {
         console.log(req);

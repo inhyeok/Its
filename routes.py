@@ -80,7 +80,10 @@ def signup():
 def events():
   print request.method
   if request.method == 'POST':
-    return True
+    item = request.form
+    i = event_list.insert()
+    i.execute(title=item['title'], content=item['content'], started_at=item['started_at'], finished_at=item['finished_at'], color= item['color'], created_at= 'NOW()')
+    return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'PUT':
     item = request.form
