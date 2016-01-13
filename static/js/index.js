@@ -72,12 +72,12 @@ $(document).ready(function () {
     },
     eventDrop: function (event, delta, revertFunc, jsEvent, ui, view) {
       item = {
-        id: event.id,
-        title: event.title,
-        content: event.content,
-        started_at: moment(event.start).format('YYYY-MM-DD HH:mm'),
-        finished_at: moment(event.end).format('YYYY-MM-DD HH:mm'),
-        color: event.color
+        event_id: event.id,
+        event_title: event.title,
+        event_content: event.content,
+        event_started_at: moment(event.start).format('YYYY-MM-DD HH:mm'),
+        event_finished_at: moment(event.end).format('YYYY-MM-DD HH:mm'),
+        event_color: event.color
       }
       $.ajax({
         url: '/events',
@@ -100,12 +100,12 @@ $(document).ready(function () {
     },
     eventResize: function (event, delta, revertFunc) {
       item = {
-        id: event.id,
-        title: event.title,
-        content: event.content,
-        started_at: moment(event.start).format('YYYY-MM-DD HH:mm'),
-        finished_at: moment(event.end).format('YYYY-MM-DD HH:mm'),
-        color: event.color
+        event_id: event.id,
+        event_title: event.title,
+        event_content: event.content,
+        event_started_at: moment(event.start).format('YYYY-MM-DD HH:mm'),
+        event_finished_at: moment(event.end).format('YYYY-MM-DD HH:mm'),
+        event_color: event.color
       }
       $.ajax({
         url: '/events',
@@ -135,7 +135,6 @@ $(document).ready(function () {
       sw_alert('error', '시간 입력 형식을 다시 확인해주세요.');
       return false
     }
-    console.log($('#eventMethod').val());
     $.ajax({
       url: '/events',
       type: $('#eventMethod').val(),

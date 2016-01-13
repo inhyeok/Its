@@ -33,7 +33,6 @@ $(document).ready(function () {
         success: function (req) {
           if(req.status === 200){
             sw_alert('success', '가입완료');
-            // return true
             return window.location = '/login';
           }
           else if(req.status === 204) {

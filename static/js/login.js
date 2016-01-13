@@ -14,7 +14,6 @@ $(document).ready(function () {
         url: '/login',
         data: $this.serialize(),
         type: 'POST',
-        dataType: 'json',
         success: function (req) {
           if(req.status === 200){
             // return true

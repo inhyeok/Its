@@ -10,7 +10,7 @@ metadata = MetaData(bind=db)
 
 app.secret_key = 'I12am34ITS56by78Enon'
 
-users = Table('users', metadata, autoload=True)
+Users = Table('users', metadata, autoload=True)
 group_list = Table('group_list', metadata, autoload=True)
 event_list = Table('event_list', metadata, autoload=True)
 
@@ -25,20 +25,23 @@ def login():
   if request.method == 'POST':
     id = request.form['id']
     pw = request.form['pw']
-    user = users.select(users.c.id == id).execute().first()
+    user = Users.select(Users.c.id == id).execute().first()
+    print user
     if user:
       hash_pw = hashlib.sha1(pw+'enon').hexdigest()
       if user.pw == hash_pw:
         group_users = []
         session['user'] = dict(user)
         group = group_list.select(group_list.c.id == user.group_id).execute().first()
-        session['group'] = dict(group or {})
-        group_users_result = users.select(session['group']['id'] == user.group_id).execute()
-        for item in group_users_result:
-          group_users.append(dict(item))
-        session['group_users'] = group_users
+        if group:
+          session['group'] = dict(group)
+          group_users_result = Users.select(session['group']['id'] == user.group_id).execute()
+          for item in group_users_result:
+            group_users.append(dict(item))
+          session['group_users'] = group_users
+        else:
+          session['group'] = {}
         return jsonify({'status': 200, 'message': 'success'})
-        # return redirect(url_for('index'))
       else:
         return jsonify({'status': 204, 'message': '비밀번호를 다시 확인해주세요.'})
     else:
@@ -56,32 +59,30 @@ def logout():
 @app.route('/signup', methods=['GET', 'POST', 'PUT'])
 def signup():
   if request.method == 'POST':
-    print request.form
     name = request.form['name']
     id = request.form['id']
     pw = request.form['pw']
     phone = request.form['phone'] or ''
     group_id = request.form['group_number'] or 0
-    result = users.select(users.c.id == id).execute()
+    result = Users.select(Users.c.id == id).execute().first()
     if result:
       return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
     hash_pw = hashlib.sha1(pw+'enon').hexdigest()
-    users.insert().execute(name=name, id=id, pw=hash_pw, phone=phone, group_id=group_id)
+    Users.insert().execute(name=name, id=id, pw=hash_pw, phone=phone, group_id=group_id)
     return jsonify({'status': 200, 'message': 'success'})
 
   return render_template('signup.html')
 
 @app.route('/events', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def events():
-  print request.method
+  event_item = request.form
   if request.method == 'POST':
-    item = request.form
-    event_list.insert().execute(title=item['title'], content=item['content'], started_at=item['started_at'], finished_at=item['finished_at'], color= item['color'], created_at= 'NOW()')
+    event_list.insert().execute(title=event_item['event_title'], content=event_item['event_content'], group_id=session['group']['id'], user_id=session['user']['id'], started_at=event_item['event_started_at'], finished_at=event_item['event_finished_at'], color= event_item['event_color'], created_at= 'NOW()')
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'PUT':
-    item = request.form
-    event_list.update(event_list.c.id == item['id']).execute(title=item['title'], content=item['content'], started_at=item['started_at'], finished_at=item['finished_at'], color= item['color'], updated_at= 'NOW()')
+    print event_item
+    event_list.update(event_list.c.id == event_item['event_id']).execute(title=event_item['event_title'], content=event_item['event_content'], started_at=event_item['event_started_at'], finished_at=event_item['event_finished_at'], color= event_item['event_color'], updated_at= 'NOW()')
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'DELETE':
