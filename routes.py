@@ -61,7 +61,7 @@ def signup():
     name = request.form['name']
     id = request.form['id']
     pw = request.form['pw']
-    phone = request.form['phone']
+    phone = request.form['phone'] or ''
     group_id = request.form['group_id'] or 0
 
     s = users.select(users.c.id == id)

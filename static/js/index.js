@@ -60,7 +60,7 @@ $(document).ready(function () {
       $('#eventStart').val(moment(e.start).format('YYYY-MM-DD HH:mm'));
       $('#eventFinish').val(moment(e.end).format('YYYY-MM-DD HH:mm'));
       $('#eventColor').val(e.color);
-      $('#eventMethod').val('PUT')
+      $('#eventMethod').val('PUT');
       $('#myModal').modal('show');
       // for(var i = 0; i < $('#eventUpdateColors > svg > rect').length; i++){
       //   console.log($('#eventUpdateColors > svg > rect')[i]);
