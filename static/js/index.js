@@ -140,6 +140,7 @@ $(document).ready(function () {
       url: '/events',
       type: $('#eventMethod').val(),
       data: $this.serialize(),
+      dataType: 'json',
       success: function (req) {
         console.log(req);
         if(req.status === 200){

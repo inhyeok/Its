@@ -30,6 +30,7 @@ $(document).ready(function () {
         url: '/signup',
         data: $this.serialize(),
         type: 'POST',
+        dataType: 'json',
         success: function (req) {
           if(req.status === 200){
             sw_alert('success', '가입완료');

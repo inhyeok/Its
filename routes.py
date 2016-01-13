@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 from flask import *
-from sqlalchemy import *
+from sqlalchemy import create_engine, MetaData
 import json, hashlib
 
 app = Flask(__name__)
@@ -25,18 +25,15 @@ def login():
   if request.method == 'POST':
     id = request.form['id']
     pw = request.form['pw']
-    s = users.select(users.c.id == id)
-    user = s.execute().first()
+    user = users.select(users.c.id == id).execute().first()
     if user:
       hash_pw = hashlib.sha1(pw+'enon').hexdigest()
       if user.pw == hash_pw:
         group_users = []
         session['user'] = dict(user)
-        s = group_list.select(group_list.c.id == user.group_id)
-        group = s.execute().first()
+        group = group_list.select(group_list.c.id == user.group_id).execute().first()
         session['group'] = dict(group or {})
-        s = users.select(session['group']['id'] == user.group_id)
-        group_users_result = s.execute()
+        group_users_result = users.select(session['group']['id'] == user.group_id).execute()
         for item in group_users_result:
           group_users.append(dict(item))
         session['group_users'] = group_users
@@ -64,16 +61,14 @@ def signup():
     phone = request.form['phone'] or ''
     group_id = request.form['group_id'] or 0
 
-    s = users.select(users.c.id == id)
-    result = s.execute()
+    result = users.select(users.c.id == id).execute()
     # for item in result:
     #   if id == item.id:
     #     return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
     if result:
       return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
     hash_pw = hashlib.sha1(pw+'enon').hexdigest()
-    i = users.insert()
-    i.execute(name=name, id=id, pw=hash_pw, phone=phone, group_id=group_id)
+    users.insert().execute(name=name, id=id, pw=hash_pw, phone=phone, group_id=group_id)
     return jsonify({'status': 200, 'message': 'success'})
 
   return render_template('signup.html')
@@ -83,21 +78,18 @@ def events():
   print request.method
   if request.method == 'POST':
     item = request.form
-    i = event_list.insert()
-    i.execute(title=item['title'], content=item['content'], started_at=item['started_at'], finished_at=item['finished_at'], color= item['color'], created_at= 'NOW()')
+    event_list.insert().execute(title=item['title'], content=item['content'], started_at=item['started_at'], finished_at=item['finished_at'], color= item['color'], created_at= 'NOW()')
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'PUT':
     item = request.form
-    u = event_list.update(event_list.c.id == item['id'])
-    u.execute(title=item['title'], content=item['content'], started_at=item['started_at'], finished_at=item['finished_at'], color= item['color'], updated_at= 'NOW()')
+    event_list.update(event_list.c.id == item['id']).execute(title=item['title'], content=item['content'], started_at=item['started_at'], finished_at=item['finished_at'], color= item['color'], updated_at= 'NOW()')
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'DELETE':
     return True
 
-  s = event_list.select(session['group']['id'] == event_list.c.group_id)
-  result = s.execute()
+  result = event_list.select(session['group']['id'] == event_list.c.group_id).execute()
   event_items = []
   for item in result:
     event_items.append(dict(item))
