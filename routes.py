@@ -1,7 +1,7 @@
 #!/usr/bin/python
 #-*- coding: utf-8 -*-
 from flask import *
-from sqlalchemy import create_engine, MetaData
+from sqlalchemy import *
 import json, hashlib
 
 app = Flask(__name__)
