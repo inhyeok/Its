@@ -17,6 +17,8 @@ event_list = Table('event_list', metadata, autoload=True)
 @app.route('/')
 def index():
   if session:
+    if session['user']['group_id'] == 0:
+      return render_template('group_make.html')
     return render_template('index.html')
   return render_template('lending.html')
 
@@ -26,7 +28,6 @@ def login():
     id = request.form['id']
     pw = request.form['pw']
     user = Users.select(Users.c.id == id).execute().first()
-    print user
     if user:
       hash_pw = hashlib.sha1(pw+'enon').hexdigest()
       if user.pw == hash_pw:
@@ -46,7 +47,6 @@ def login():
         return jsonify({'status': 204, 'message': '비밀번호를 다시 확인해주세요.'})
     else:
       return jsonify({'status': 204, 'message': '존재하지않은 아이디 입니다.'})
-
   return render_template('login.html')
 
 @app.route('/logout')
@@ -63,14 +63,17 @@ def signup():
     id = request.form['id']
     pw = request.form['pw']
     phone = request.form['phone'] or ''
-    group_id = request.form['group_number'] or 0
+    group_code = request.form['group_code'] or ''
+    group_code_check = group_list.select(group_list.c.code == group_code).execute().first()
+    group_id = 0
+    if group_code_check:
+      group_id = group_code_check['id']
     result = Users.select(Users.c.id == id).execute().first()
     if result:
       return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
     hash_pw = hashlib.sha1(pw+'enon').hexdigest()
     Users.insert().execute(name=name, id=id, pw=hash_pw, phone=phone, group_id=group_id)
     return jsonify({'status': 200, 'message': 'success'})
-
   return render_template('signup.html')
 
 @app.route('/events', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -106,6 +109,27 @@ def users():
     return True
 
   return render_template('user.html')
+
+@app.route('/group', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def group():
+  if request.method == 'POST':
+    group_name = request.form['group_name']
+    group_code = request.form['group_code']
+    group_code_check = group_list.select(group_list.c.code == group_code).execute().first()
+    if group_code_check:
+      return jsonify({'status': 204, 'message': '이미 사용중인 그룹코드입니다.'})
+    group_list.insert().execute(name=group_name, code=group_code)
+    group_info = group_list.select(group_list.c.code == group_code).execute().first()
+    Users.update(Users.c.id == session['user']['code']).execute(group_id=group_info['id'])
+    return jsonify({'status': 200, 'message': '성공'})
+
+  elif request.method == 'PUT':
+    return True
+
+  elif request.method == 'DELETE':
+    return True
+
+  return True
 
 # @app.route('/mktable/users')
 # def mktable_users():
