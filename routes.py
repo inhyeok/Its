@@ -56,16 +56,13 @@ def logout():
 @app.route('/signup', methods=['GET', 'POST', 'PUT'])
 def signup():
   if request.method == 'POST':
+    print request.form
     name = request.form['name']
     id = request.form['id']
     pw = request.form['pw']
     phone = request.form['phone'] or ''
-    group_id = request.form['group_id'] or 0
-
+    group_id = request.form['group_number'] or 0
     result = users.select(users.c.id == id).execute()
-    # for item in result:
-    #   if id == item.id:
-    #     return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
     if result:
       return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
     hash_pw = hashlib.sha1(pw+'enon').hexdigest()
