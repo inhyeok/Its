@@ -18,7 +18,7 @@ event_list = Table('event_list', metadata, autoload=True)
 def index():
   if session:
     if session['user']['group_id'] == 0:
-      return render_template('group_make.html')
+      return redirect(url_for('group'))
     return render_template('index.html')
   return render_template('lending.html')
 
@@ -120,7 +120,9 @@ def group():
       return jsonify({'status': 204, 'message': '이미 사용중인 그룹코드입니다.'})
     group_list.insert().execute(name=group_name, code=group_code)
     group_info = group_list.select(group_list.c.code == group_code).execute().first()
-    Users.update(Users.c.id == session['user']['code']).execute(group_id=group_info['id'])
+    Users.update(Users.c.code == session['user']['code']).execute(group_id=group_info['id'])
+    session['user']['group_id'] = group_info['id']
+    session['group'] = group_info
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'PUT':
@@ -129,7 +131,7 @@ def group():
   elif request.method == 'DELETE':
     return True
 
-  return True
+  return render_template('group_make.html')
 
 # @app.route('/mktable/users')
 # def mktable_users():
