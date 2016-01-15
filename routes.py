@@ -40,7 +40,6 @@ def login():
           for item in group_users_result:
             group_users.append(dict(item))
           session['group_users'] = group_users
-          print session['group_users']
         else:
           session['group'] = {}
         return jsonify({'status': 200, 'message': 'success'})

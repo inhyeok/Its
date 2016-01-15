@@ -3,11 +3,16 @@
 
 {% block scripts %}
   <!-- // <script type="text/javascript" src="{{url_for('static', filename='bower_components/fullcalendar/dist/lang-all.js')}}"></script> -->
+  <script src="{{url_for('static', filename='bower_components/fullcalendar/dist/fullcalendar.min.js')}}"></script>
+  <script src="{{url_for('static', filename='bower_components/fullcalendar/dist/gcal.js')}}"></script>
+  <script src="{{url_for('static', filename='bower_components/fullcalendar-scheduler/dist/scheduler.min.js')}}"></script>
   <script type="text/javascript" src="{{url_for('static', filename='bower_components/fullcalendar/dist/lang/ko.js')}}"></script>
   <script type="text/javascript" src="{{url_for('static', filename='js/index.js')}}"></script>
 {% endblock %}
 
 {% block styles %}
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bower_components/fullcalendar/dist/fullcalendar.min.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bower_components/fullcalendar-scheduler/dist/scheduler.min.css')}}">
   <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/index.css')}}">
 {% endblock %}
 
