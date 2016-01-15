@@ -115,6 +115,9 @@ def group():
   if request.method == 'POST':
     group_name = request.form['group_name']
     group_code = request.form['group_code']
+    group_code_check = group_list.select(group_list.c.name == group_name).execute().first()
+    if group_code_check:
+      return jsonify({'status': 204, 'message': '이미 사용중인 그룹이름입니다.'})
     group_code_check = group_list.select(group_list.c.code == group_code).execute().first()
     if group_code_check:
       return jsonify({'status': 204, 'message': '이미 사용중인 그룹코드입니다.'})
@@ -123,6 +126,7 @@ def group():
     Users.update(Users.c.code == session['user']['code']).execute(group_id=group_info['id'])
     session['user']['group_id'] = group_info['id']
     session['group'] = dict(group_info)
+    session['group_users'] = [session['user']]
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'PUT':
