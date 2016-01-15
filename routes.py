@@ -36,10 +36,11 @@ def login():
         group = group_list.select(group_list.c.id == user.group_id).execute().first()
         if group:
           session['group'] = dict(group)
-          group_users_result = Users.select(session['group']['id'] == user.group_id).execute()
+          group_users_result = Users.select(Users.c.group_id == user.group_id).execute()
           for item in group_users_result:
             group_users.append(dict(item))
           session['group_users'] = group_users
+          print session['group_users']
         else:
           session['group'] = {}
         return jsonify({'status': 200, 'message': 'success'})
@@ -122,7 +123,7 @@ def group():
     group_info = group_list.select(group_list.c.code == group_code).execute().first()
     Users.update(Users.c.code == session['user']['code']).execute(group_id=group_info['id'])
     session['user']['group_id'] = group_info['id']
-    session['group'] = group_info
+    session['group'] = dict(group_info)
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'PUT':
