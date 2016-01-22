@@ -84,7 +84,6 @@ def events():
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'PUT':
-    print event_item
     event_list.update(event_list.c.id == event_item['event_id']).execute(title=event_item['event_title'], content=event_item['event_content'], started_at=event_item['event_started_at'], finished_at=event_item['event_finished_at'], color= event_item['event_color'], updated_at= 'NOW()')
     return jsonify({'status': 200, 'message': '성공'})
 
