@@ -136,6 +136,16 @@ def group():
 
   return render_template('group_make.html')
 
+@app.route('/board', methods=['GET','POST','PUT','DELETE'])
+def board():
+  if request.method == 'POST'
+    return True
+  else if request.method == 'PUT'
+    return True
+  else if request.method == 'DELETE'
+    return True
+  return render_template('board.html')
+
 # @app.route('/mktable/users')
 # def mktable_users():
 #   conn = db.connect()
