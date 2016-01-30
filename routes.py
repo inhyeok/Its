@@ -138,11 +138,11 @@ def group():
 
 @app.route('/board', methods=['GET','POST','PUT','DELETE'])
 def board():
-  if request.method == 'POST'
+  if request.method == 'POST':
     return True
-  else if request.method == 'PUT'
+  elif request.method == 'PUT':
     return True
-  else if request.method == 'DELETE'
+  elif request.method == 'DELETE':
     return True
   return render_template('board.html')
 
