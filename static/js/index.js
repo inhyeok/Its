@@ -53,7 +53,6 @@ $(document).ready(function () {
       $('#myModal').modal('show');
     },
     eventClick: function (e) {
-      console.log(e);
       $('#eventId').val(e.id);
       $('#eventTitle').val(e.title);
       $('#eventContent').val(e.content);
@@ -133,6 +132,10 @@ $(document).ready(function () {
     $this = $(this);
     if(!moment($this.find($('#eventStart')).val(), 'YYYY-MM-DD HH:mm', true).isValid() || !moment($this.find($('#eventFinish')).val(), 'YYYY-MM-DD HH:mm', true).isValid()){
       sw_alert('error', '시간 입력 형식을 다시 확인해주세요.');
+      return false
+    }
+    if(moment($this.find($('#eventStart')).val()).format('YYYY-MM-DD HH:mm') >= moment($this.find($('#eventFinish')).val()).format('YYYY-MM-DD HH:mm')){
+      sw_alert('error', '끝 날짜는 시작 날짜보다 늦을 수 없습니다.');
       return false
     }
     $.ajax({
