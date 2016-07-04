@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
   $('#loginForm').on('submit', function () {
     $this = $(this);
     if(!$this.find($('#id')).val()){

@@ -1,4 +1,4 @@
-$(document).ready(function () {
+$(function () {
   $('#calendar').fullCalendar({
     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
     // googleCalendarApiKey: 'AIzaSyCxuLEwSrp8wC4y5uu6qm-L_mXeouAPWgs',
