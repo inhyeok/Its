@@ -17,7 +17,7 @@ event_list = Table('event_list', metadata, autoload=True)
 @app.route('/')
 def index():
   if session:
-    if session['user']['group_id'] == 0:
+    if not session['user']['group_id']:
       return redirect(url_for('group'))
     return render_template('index.html')
   return render_template('lending.html')
@@ -134,6 +134,8 @@ def group():
   elif request.method == 'DELETE':
     return True
 
+  if session['user']['group_id']:
+    return redirect(url_for('index'))
   return render_template('group_make.html')
 
 @app.route('/board', methods=['GET','POST','PUT','DELETE'])
