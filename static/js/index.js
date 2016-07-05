@@ -130,11 +130,11 @@ $(function () {
 
   $('#eventUpdate').on('submit', function () {
     $this = $(this);
-    if(!moment($this.find($('#eventStart')).val(), 'YYYY-MM-DD', true).isValid() || !moment($this.find($('#eventFinish')).val(), 'YYYY-MM-DD', true).isValid()){
+    if(!moment($this.find($('#eventStart')).val(), 'YYYY-MM-DD HH:mm', true).isValid() || !moment($this.find($('#eventFinish')).val(), 'YYYY-MM-DD HH:mm', true).isValid()){
       sw_alert('error', '시간 입력 형식을 다시 확인해주세요.');
       return false
     }
-    if(moment($this.find($('#eventStart')).val()).format('YYYY-MM-DD') >= moment($this.find($('#eventFinish')).val()).format('YYYY-MM-DD')){
+    if(moment($this.find($('#eventStart')).val()).format('YYYY-MM-DD HH:mm') >= moment($this.find($('#eventFinish')).val()).format('YYYY-MM-DD HH:mm')){
       sw_alert('error', '끝 날짜는 시작 날짜보다 늦을 수 없습니다.');
       return false
     }
@@ -184,9 +184,9 @@ $(function () {
     $('#eventColor').val($this.attr('color'));
   });
 
-  __ = $('input[data-datepicker]')
-  __.datepicker({
-    format: "yyyy-mm-dd"
+  __ = $('input[data-datetimepicker]')
+  __.datetimepicker({
+    format: "YYYY-MM-DD HH:mm"
   });
 
   sw_alert = function (type, message) {
