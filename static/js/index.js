@@ -161,25 +161,10 @@ $(function () {
     return false
   });
 
-  $('#getEvents').on('click', function () {
-    $.ajax({
-      url: '/events',
-      type: 'GET',
-      success: function (req) {
-        if(req.status === 200){
-          // return true
-          return console.log(req);
-        }
-      },
-      error: function (err) {
-        console.log(err);
-      }
-    });
-  });
-
-  $('#eventUpdateColors > svg > rect').on('click', function () {
+  __ = $('#eventUpdateColors > svg > rect')
+  __.on('click', function () {
     $this = $(this);
-    $('#eventUpdateColors > svg > rect').css('opacity', 0.3);
+    __.css('opacity', 0.3);
     $this.css('opacity', 1);
     $('#eventColor').val($this.attr('color'));
   });

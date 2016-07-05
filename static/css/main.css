@@ -26,3 +26,7 @@ body{
 .required {
   color: #D72E2B;
 }
+
+.form-group label.form-label{
+  line-height: 34px;
+}
