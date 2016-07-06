@@ -19,24 +19,28 @@
 
   </head>
   <body>
-    <div id='header' class='header'>
-      <div class='text-center'>
-        {% if session.group %}
-          <h3>
-            <a href='/'>
-              {{ session.group.name }}
-            </a>
-          </h3>
-        {% else %}
-          <a href='/'>
-            <h3>Team</h3>
-          </a>
-        {% endif %}
+    <header class='header' id='header' >
+      <div class='row'>
+        <div class='logo col-sm-3' id='logo'>
+          {% if session.group %}
+            <span>
+              <a href='/'>
+                {{ session.group.name }}
+              </a>
+            </span>
+          {% else %}
+            <span>
+              <a href='/'>
+                Team
+              </a>
+            </span>
+          {% endif %}
+        </div>
       </div>
-    </div>
-    <div class='content'>
+    </header>
+    <article class='content'>
       {% block content %}
       {% endblock %}
     </div>
-  </body>
+  </article>
 </html>
