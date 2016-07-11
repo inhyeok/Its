@@ -11,8 +11,8 @@ metadata = MetaData(bind=db)
 app.secret_key = 'I12am34ITS56by78Enon'
 
 Users = Table('users', metadata, autoload=True)
-group_list = Table('group_list', metadata, autoload=True)
-event_list = Table('event_list', metadata, autoload=True)
+GroupList = Table('group_list', metadata, autoload=True)
+EventList = Table('event_list', metadata, autoload=True)
 
 @app.route('/')
 def index():
@@ -33,7 +33,7 @@ def login():
       if user.pw == hash_pw:
         group_users = []
         session['user'] = dict(user)
-        group = group_list.select(group_list.c.id == user.group_id).execute().first()
+        group = GroupList.select(GroupList.c.id == user.group_id).execute().first()
         if group:
           session['group'] = dict(group)
           group_users_result = Users.select(Users.c.group_id == user.group_id).execute()
@@ -64,7 +64,7 @@ def signup():
     pw = request.form['pw']
     phone = request.form['phone'] or ''
     group_code = request.form['group_code'] or ''
-    group_code_check = group_list.select(group_list.c.code == group_code).execute().first()
+    group_code_check = GroupList.select(GroupList.c.code == group_code).execute().first()
     group_id = 0
     if group_code_check:
       group_id = group_code_check['id']
@@ -80,17 +80,17 @@ def signup():
 def events():
   event_item = request.form
   if request.method == 'POST':
-    event_list.insert().execute(title=event_item['event_title'], content=event_item['event_content'], group_id=session['group']['id'], user_id=session['user']['id'], started_at=event_item['event_started_at'], finished_at=event_item['event_finished_at'], color= event_item['event_color'], created_at= 'NOW()')
+    EventList.insert().execute(title=event_item['event_title'], content=event_item['event_content'], group_id=session['group']['id'], user_id=session['user']['id'], started_at=event_item['event_started_at'], finished_at=event_item['event_finished_at'], color= event_item['event_color'], created_at= 'NOW()')
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'PUT':
-    event_list.update(event_list.c.id == event_item['event_id']).execute(title=event_item['event_title'], content=event_item['event_content'], started_at=event_item['event_started_at'], finished_at=event_item['event_finished_at'], color= event_item['event_color'], updated_at= 'NOW()')
+    EventList.update(EventList.c.id == event_item['event_id']).execute(title=event_item['event_title'], content=event_item['event_content'], started_at=event_item['event_started_at'], finished_at=event_item['event_finished_at'], color= event_item['event_color'], updated_at= 'NOW()')
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'DELETE':
     return True
 
-  result = event_list.select(session['group']['id'] == event_list.c.group_id).execute()
+  result = EventList.select(session['group']['id'] == EventList.c.group_id).execute()
   event_items = []
   for item in result:
     event_items.append(dict(item))
@@ -114,14 +114,14 @@ def group():
   if request.method == 'POST':
     group_name = request.form['group_name']
     group_code = request.form['group_code']
-    group_code_check = group_list.select(group_list.c.name == group_name).execute().first()
+    group_code_check = GroupList.select(GroupList.c.name == group_name).execute().first()
     if group_code_check:
       return jsonify({'status': 204, 'message': '이미 사용중인 그룹이름입니다.'})
-    group_code_check = group_list.select(group_list.c.code == group_code).execute().first()
+    group_code_check = GroupList.select(GroupList.c.code == group_code).execute().first()
     if group_code_check:
       return jsonify({'status': 204, 'message': '이미 사용중인 그룹코드입니다.'})
-    group_list.insert().execute(name=group_name, code=group_code)
-    group_info = group_list.select(group_list.c.code == group_code).execute().first()
+    GroupList.insert().execute(name=group_name, code=group_code)
+    group_info = GroupList.select(GroupList.c.code == group_code).execute().first()
     Users.update(Users.c.code == session['user']['code']).execute(group_id=group_info['id'])
     session['user']['group_id'] = group_info['id']
     session['group'] = dict(group_info)
