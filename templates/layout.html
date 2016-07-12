@@ -4,12 +4,6 @@
     <title>{% block title %}{% endblock %}</title>
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="{{url_for('static', filename='bower_components/jquery/dist/jquery.min.js')}}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='bower_components/sweetalert/dist/sweetalert.min.js')}}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='bower_components/moment/moment.js')}}"></script>
-    <script type="text/javascript" src="{{url_for('static', filename='bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
-    {% block scripts %}{% endblock %}
 
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bower_components/bootstrap/dist/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='bower_components/sweetalert/dist/sweetalert.css')}}">
@@ -41,6 +35,13 @@
     <article class='content'>
       {% block content %}
       {% endblock %}
-    </div>
-  </article>
+    </article>
+
+    <script type="text/javascript" src="{{url_for('static', filename='bower_components/jquery/dist/jquery.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='bower_components/sweetalert/dist/sweetalert.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='bower_components/moment/moment.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
+    {% block scripts %}{% endblock %}
+  </body>
 </html>

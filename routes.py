@@ -20,7 +20,7 @@ def index():
     if not session['user']['group_id']:
       return redirect(url_for('group'))
     return render_template('index.html')
-  return render_template('lending.html')
+  return render_template('landing.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
