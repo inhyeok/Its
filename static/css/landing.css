@@ -1,0 +1,29 @@
+body{
+  background-color: #FAFAFA;
+}
+
+.image {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 100%;
+  min-height: 300px;
+  height: 500px;
+  // padding-top: 500px;
+}
+
+.landing-header {
+  width: 100%;
+  position: relative;
+}
+.landing-header-desc {
+  position: relative;
+  width: 70rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+.landing-header-desc span{
+  display: block;
+  font-size: 7rem;
+  color: #fff;
+}

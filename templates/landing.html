@@ -9,16 +9,17 @@
     <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/landing.css')}}">
   </head>
   <body>
-    <div class='row'>
-      <div class='col-sm-12 text-center'>
-        <a href="/login">
-          <h1>시작하기</h1>
-        </a>
+    <div class='landing'>
+      <div class='landing-header image' style="background-image: url('/static/images/landing_bg.jpg')">
+        <div class='landing-header-desc text-center'>
+          <span>Our Travels</span>
+          <a href="/login">시작하기</a>
+        </div>
       </div>
     </div>
-    <div id='footer' class='footer'>
+    <!-- <div id='footer' class='footer'>
       <a href="mailto:enon.jeong@gmail.com">enon.jeong@gmail.com</a>
-    </div>
+    </div> -->
 
     <script src="{{url_for('static', filename='bower_components/jquery/dist/jquery.min.js')}}"></script>
     <script src="{{url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
