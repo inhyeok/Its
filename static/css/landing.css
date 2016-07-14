@@ -1,29 +1,115 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(https://fonts.googleapis.com/css?family=Pacifico);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
 body{
   background-color: #FAFAFA;
+  font-family: 'Roboto', 'nanumgothic', sans-serif;
+}
+.row {
+  margin: 0;
 }
 
+.icon {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+}
 .image {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   width: 100%;
-  min-height: 300px;
-  height: 500px;
-  // padding-top: 500px;
+  height: 100%;
 }
 
 .landing-header {
+  z-index: 1000;
   width: 100%;
+  height: 700px;
+  min-height: 300px;
   position: relative;
+  margin-bottom: 3.5rem;
 }
+
+/*백그라운드 darken style*/
+/*.landing-header:after {
+  content: '\A';
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,0.2);
+  opacity: 1;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+}*/
+
 .landing-header-desc {
+  z-index: 1001;
   position: relative;
-  width: 70rem;
-  margin-left: auto;
-  margin-right: auto;
+  padding-top: 17.5rem;
+  margin: 0;
+  color: #fff;
+  text-shadow: 1px 0 2px #949494;
 }
+
 .landing-header-desc span{
   display: block;
-  font-size: 7rem;
+  font-size: 8rem;
   color: #fff;
+  font-family: 'Pacifico', cursive;
+  margin-bottom: 3.5rem;
+}
+
+.landing-header-desc a{
+  display: block;
+  color: #fff;
+}
+.landing-body {
+  margin: 0 7rem 20rem 7rem;
+}
+
+.landing-body .icon {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+  margin-right: 2rem;
+  float: left;
+  display: inline-block;
+}
+
+.landing-body .item {
+  display: inline-block;
+  padding-bottom: 3.5rem;
+}
+
+.landing-body .item:nth-child(2n) {
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+
+@media screen and (max-width: 990px) {
+  .landing-body .item:nth-child(2n) {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    border-left: 0;
+    border-right: 0;
+  }
+}
+@media screen and (max-width: 480px) {
+  .landing-header-desc span{
+    font-size: 4rem;
+  }
+
+  .landing-body .item:nth-child(2n) {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    border-left: 0;
+    border-right: 0;
+  }
 }

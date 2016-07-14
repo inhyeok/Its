@@ -1,6 +1,11 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+
 body{
   background-color: #FAFAFA;
+  font-family: 'Roboto', 'nanumgothic', sans-serif;
 }
+
 .header {
   background-color: #A52127;
   width: 100%;
