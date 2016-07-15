@@ -6,6 +6,7 @@ body{
   background-color: #FAFAFA;
   font-family: 'Roboto', 'nanumgothic', sans-serif;
 }
+
 .row {
   margin: 0;
 }
@@ -23,6 +24,38 @@ body{
   background-position: center center;
   width: 100%;
   height: 100%;
+}
+
+.header {
+  z-index: 1002;
+  width: 100%;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 7rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.header .header-logo {
+  float: left;
+  color: #fff;
+}
+
+.header .header-menu {
+  float: right;
+}
+
+.header .header-menu button{
+  color: #fff;
+  background: transparent;
+}
+.header .header-menu button:hover{
+  color: #ccc;
+}
+
+.header .header-menu button:focus{
+  background: transparent;
 }
 
 .landing-header {
@@ -88,7 +121,7 @@ body{
   padding-bottom: 3.5rem;
 }
 
-.landing-body .item:nth-child(2n) {
+.landing-body .item:nth-child(3) {
   border-left: 1px solid #eee;
   border-right: 1px solid #eee;
 }

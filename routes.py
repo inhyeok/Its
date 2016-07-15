@@ -54,7 +54,7 @@ def logout():
   session.pop('user', None)
   session.pop('group', None)
   session.pop('group_users', None)
-  return redirect(url_for('login'))
+  return redirect(url_for('index'))
 
 @app.route('/signup', methods=['GET', 'POST', 'PUT'])
 def signup():
