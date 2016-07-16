@@ -46,15 +46,15 @@ body{
   float: right;
 }
 
-.header .header-menu button{
+.header .header-menu .btn-default{
   color: #A52127;
   background: transparent;
 }
-.header .header-menu button:hover{
+.header .header-menu .btn-default:hover{
   color: #A52127;
 }
 
-.header .header-menu button:focus{
+.header .header-menu .btn-default:focus{
   background: transparent;
 }
 

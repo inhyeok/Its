@@ -22,8 +22,8 @@ def index():
     return render_template('index.html')
   return render_template('landing.html')
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/signin', methods=['GET', 'POST'])
+def signin():
   if request.method == 'POST':
     id = request.form['id']
     pw = request.form['pw']
@@ -47,7 +47,7 @@ def login():
         return jsonify({'status': 204, 'message': '비밀번호를 다시 확인해주세요.'})
     else:
       return jsonify({'status': 204, 'message': '존재하지않은 아이디 입니다.'})
-  return render_template('login.html')
+  return render_template('signin.html')
 
 @app.route('/logout')
 def logout():
@@ -59,20 +59,36 @@ def logout():
 @app.route('/signup', methods=['GET', 'POST', 'PUT'])
 def signup():
   if request.method == 'POST':
-    name = request.form['name']
-    id = request.form['id']
-    pw = request.form['pw']
-    phone = request.form['phone'] or ''
-    group_code = request.form['group_code'] or ''
-    group_code_check = GroupList.select(GroupList.c.code == group_code).execute().first()
-    group_id = 0
-    if group_code_check:
-      group_id = group_code_check['id']
-    result = Users.select(Users.c.id == id).execute().first()
+    user = {
+      'name': request.form['name'],
+      'id': request.form['id'],
+      'pw': request.form['pw'],
+      'phone': request.form['phone'] or '',
+      'group_code': request.form['group_code'] or '',
+      'group_id': 0
+    }
+    result = Users.select(Users.c.id == user['id']).execute().first()
     if result:
       return jsonify({'status': 204, 'message': '이미 사용중인 아이디입니다.'})
-    hash_pw = hashlib.sha1(pw+'enon').hexdigest()
-    Users.insert().execute(name=name, id=id, pw=hash_pw, phone=phone, group_id=group_id)
+    group_code_check = GroupList.select(GroupList.c.code == user['group_code']).execute().first()
+    if group_code_check:
+      user['group_id'] = group_code_check['id']
+    user['pw'] = hashlib.sha1(user['pw']+'enon').hexdigest()
+    Users.insert().execute(user)
+
+    # group_users = []
+    # session['user'] = dict(user)
+
+    # # Add user session
+    # if user['group_id'] != 0:
+    #   session['group'] = dict(group_code_check)
+    #   group_users = Users.select(Users.c.group_id == user['group_id']).execute()
+    #   for item in group_users:
+    #     group_users.append(dict(item))
+    #   session['group_users'] = group_users
+    # else:
+    #   session['group'] = {}
+
     return jsonify({'status': 200, 'message': 'success'})
   return render_template('signup.html')
 
@@ -117,9 +133,6 @@ def group():
     group_code_check = GroupList.select(GroupList.c.name == group_name).execute().first()
     if group_code_check:
       return jsonify({'status': 204, 'message': '이미 사용중인 그룹이름입니다.'})
-    group_code_check = GroupList.select(GroupList.c.code == group_code).execute().first()
-    if group_code_check:
-      return jsonify({'status': 204, 'message': '이미 사용중인 그룹코드입니다.'})
     GroupList.insert().execute(name=group_name, code=group_code)
     group_info = GroupList.select(GroupList.c.code == group_code).execute().first()
     Users.update(Users.c.code == session['user']['code']).execute(group_id=group_info['id'])
@@ -134,7 +147,9 @@ def group():
   elif request.method == 'DELETE':
     return True
 
-  if session['user']['group_id']:
+  if not session:
+    return redirect(url_for('index'))
+  if session['user']['group_id'] and session['user']['group_id'] != 0:
     return redirect(url_for('index'))
   return render_template('group_make.html')
 
