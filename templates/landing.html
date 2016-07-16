@@ -54,9 +54,11 @@
           </button>
         </div>
       </div>
-      <div class='landing-header image' style="background-image: url('/static/images/landing_bg2.jpg')">
+      <!-- <div class='landing-header image' style="background-image: url('/static/images/landing_bg2.jpg')"> -->
+      <div class='landing-header'>
         <div class='landing-header-desc row'>
-          <div class='col-lg-8 col-md-7 col-sm-7 text-center'>
+          <!-- <div class='col-lg-8 col-md-7 col-sm-7 text-center'> -->
+          <div class='col-sm-12 text-center'>
             <span>
               Our Travel
               <br>
@@ -107,6 +109,12 @@
     <script type="text/javascript" src="{{url_for('static', filename='bower_components/jquery/dist/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='js/signin.js')}}"></script>
+    <script type="text/javascript">
+      $('.landing-header').css('height', window.innerHeight);
+      $(window).on('resize', function () {
+        $('.landing-header').css('height', window.innerHeight);
+      })
+    </script>
     {% block script %}{% endblock %}
   </body>
 </html>

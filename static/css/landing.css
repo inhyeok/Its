@@ -8,6 +8,7 @@ body{
   background-color: #ECF0F1;
   // font-family: 'Roboto', 'nanumgothic', sans-serif;
   font-family: 'Indie Flower', cursive;
+  color: #2C3E50;
 }
 
 .row {
@@ -38,11 +39,11 @@ body{
   position: absolute;
   top: 0;
   left: 0;
+  color: #ECF0F1;
 }
 
 .header .header-logo {
   float: left;
-  color: #2C3E50;
 }
 
 .header .header-menu {
@@ -50,11 +51,11 @@ body{
 }
 
 .header .header-menu .btn-default{
-  color: #2C3E50;
+  color: #ECF0F1;
   background: transparent;
 }
 .header .header-menu .btn-default:hover{
-  color: #2C3E50;
+  color: #ECF0F1;
 }
 
 .header .header-menu .btn-default:focus{
@@ -66,13 +67,14 @@ body{
 }
 
 .landing-header {
+  background-color: #3498DB;
   z-index: 1000;
   width: 100%;
-  height: 700px;
-  min-height: 300px;
+  // height: 700px;
+  // min-height: 300px;
   position: relative;
   margin-bottom: 3.5rem;
-  color: #2C3E50;
+  color: #ECF0F1;
 }
 
 /*백그라운드 darken style*/
@@ -92,10 +94,10 @@ body{
 
 .landing-header-desc {
   z-index: 1001;
+  height: 100%;
   position: relative;
   padding-top: 17.5rem;
   margin: 0;
-  color: #2C3E50;
   // text-shadow: 1px 0 2px #949494;
 }
 
