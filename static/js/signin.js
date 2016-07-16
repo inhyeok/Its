@@ -1,5 +1,5 @@
 $(function () {
-  $('#loginForm').on('submit', function () {
+  $('#signinForm').on('submit', function () {
     $this = $(this);
     if(!$this.find($('#id')).val()){
       $this.find($('#id')).focus();
@@ -11,7 +11,7 @@ $(function () {
     }
     else {
       $.ajax({
-        url: '/login',
+        url: '/signin',
         data: $this.serialize(),
         type: 'POST',
         success: function (req) {

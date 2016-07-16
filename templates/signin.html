@@ -2,13 +2,13 @@
 {% block title %} 로그인 {% endblock %}
 
 {% block scripts %}
-  <script type="text/javascript" src="{{url_for('static', filename='js/login.js')}}"></script>
+  <script type="text/javascript" src="{{url_for('static', filename='js/signin.js')}}"></script>
 {% endblock %}
 
 {% block content %}
   <div class='row' style='padding-top: 5%;'>
     <div class='col-sm-4 col-sm-offset-4'>
-      <form id='loginForm' action="{{url_for('login')}}" method='POST'>
+      <form id='signinForm' action="{{url_for('signin')}}" method='POST'>
         <div class='form-group text-center'>
           <h4>로그인</h4>
         </div>
