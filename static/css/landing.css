@@ -1,10 +1,13 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 @import url(https://fonts.googleapis.com/css?family=Pacifico);
+@import url(https://fonts.googleapis.com/css?family=Indie+Flower);
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 body{
-  background-color: #FAFAFA;
-  font-family: 'Roboto', 'nanumgothic', sans-serif;
+  // background-color: #FAFAFA;
+  background-color: #ECF0F1;
+  // font-family: 'Roboto', 'nanumgothic', sans-serif;
+  font-family: 'Indie Flower', cursive;
 }
 
 .row {
@@ -39,7 +42,7 @@ body{
 
 .header .header-logo {
   float: left;
-  color: #A52127;
+  color: #2C3E50;
 }
 
 .header .header-menu {
@@ -47,11 +50,11 @@ body{
 }
 
 .header .header-menu .btn-default{
-  color: #A52127;
+  color: #2C3E50;
   background: transparent;
 }
 .header .header-menu .btn-default:hover{
-  color: #A52127;
+  color: #2C3E50;
 }
 
 .header .header-menu .btn-default:focus{
@@ -69,7 +72,7 @@ body{
   min-height: 300px;
   position: relative;
   margin-bottom: 3.5rem;
-  color: #A52127;
+  color: #2C3E50;
 }
 
 /*백그라운드 darken style*/
@@ -92,19 +95,19 @@ body{
   position: relative;
   padding-top: 17.5rem;
   margin: 0;
-  color: #A52127;
-  text-shadow: 1px 0 2px #949494;
+  color: #2C3E50;
+  // text-shadow: 1px 0 2px #949494;
 }
 
 .landing-header-desc span{
   display: block;
   font-size: 8rem;
-  font-family: 'Pacifico', cursive;
+  // font-family: 'Pacifico', cursive;
   margin-bottom: 3.5rem;
 }
 
 .landing-body {
-  margin: 0 7rem 0 7rem;
+  margin: 7rem;
 }
 
 .landing-body .icon {
