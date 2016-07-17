@@ -6,6 +6,10 @@ body{
   color: #2C3E50;
 }
 
+h2 {
+  margin: 0;
+}
+
 .row {
   margin: 0;
 }
@@ -55,8 +59,9 @@ body{
 
 .landing-header-desc span{
   display: block;
-  font-size: 8rem;
-  margin-bottom: 3.5rem;
+  // font-size: 8rem;
+  font-size: 75px;
+  margin: 3.5rem 0;
 }
 
 .landing-body {
@@ -66,4 +71,10 @@ body{
 .landing-body .item {
   display: inline-block;
   padding-bottom: 7rem;
+}
+
+@media (max-width: 480px) {
+  .landing-header-desc span {
+    font-size: 45px;
+  }
 }

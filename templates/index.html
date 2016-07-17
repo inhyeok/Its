@@ -24,47 +24,43 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title">이벤트 정보</h4>
         </div>
-        <form class='form-horizontal' id='eventUpdate' action="{{url_for('events')}}" method='PUT'>
-          <div class="modal-body row" style='padding: 20px 40px;'>
+        <form id='eventUpdate' action="{{url_for('events')}}" method='PUT'>
+          <div class="modal-body">
               <div class='form-group'>
-                <label class='col-sm-2 form-label'>
+                <label>
                   제목
                   <span class='required'>*</span>
                 </label>
-                <div class='col-sm-10'>
-                  <input type='text' class='form-control' id='eventTitle' name='event_title' autofocus required />
-                </div>
+                <input type='text' class='form-control' id='eventTitle' name='event_title' autofocus required />
               </div>
               <div class='form-group'>
-                <label class='col-sm-2 form-label'>
+                <label>
                   내용
                   <span class='required'>*</span>
                 </label>
-                <div class='col-sm-10'>
-                  <textarea rows='4' class='form-control' id='eventContent' name='event_content' style="resize: none; wrap:hard;" required></textarea>
+                <textarea rows='4' class='form-control' id='eventContent' name='event_content' style="resize: none; wrap:hard;" required></textarea>
+              </div>
+              <div class='form-group'>
+                <div class='row'>
+                  <div class='col-sm-6'>
+                    <label>
+                      시작
+                      <span class='required'>*</span>
+                    </label>
+                    <input data-datetimepicker type='text' class='form-control' id='eventStart' name='event_started_at' placeholder='시작' required />
+                  </div>
+                  <div class='col-sm-6'>
+                    <label>
+                      끝
+                      <span class='required'>*</span>
+                    </label>
+                    <input data-datetimepicker type='text' class='form-control' id='eventFinish' name='event_finished_at' placeholder='끝' required />
+                  </div>
                 </div>
               </div>
               <div class='form-group'>
-                <label class='col-sm-2 form-label'>
-                  시작
-                  <span class='required'>*</span>
-                </label>
-                <div class='col-sm-10'>
-                  <input data-datetimepicker type='text' class='form-control' id='eventStart' name='event_started_at' placeholder='시작' required />
-                </div>
-              </div>
-              <div class='form-group'>
-                <label class='col-sm-2 form-label'>
-                  끝
-                  <span class='required'>*</span>
-                </label>
-                <div class='col-sm-10'>
-                  <input data-datetimepicker type='text' class='form-control' id='eventFinish' name='event_finished_at' placeholder='끝' required />
-                </div>
-              </div>
-              <div class='form-group'>
-                <label class='col-sm-2'>색깔</label>
-                <div class='col-sm-10' id='eventUpdateColors'>
+                <label>색깔</label>
+                <div id='eventUpdateColors'>
                   <input type='hidden' class='form-control' id='eventColor' name='event_color' required />
                   <svg width='25' height='25'>
                     <rect width='25' height='25' style='fill: #F3016A; opacity: 0.3;' color='#F3016A' />
@@ -99,7 +95,6 @@
     <div class='col-sm-7'>
       <div id='calendar'></div>
     </div>
-    <a href="{{url_for('users')}}">{{ session.user.name }}</a>
     <!-- <button id='getEvents'>이벤트가져오기</button> -->
   </div>
 {% endblock %}

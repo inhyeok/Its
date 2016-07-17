@@ -14,23 +14,23 @@
   </head>
   <body>
     <header class='header' id='header' >
-      <div class='row'>
-        <div class='logo col-sm-3' id='logo'>
-          {% if session.group %}
-            <span>
-              <a href='/'>
-                {{ session.group.name }}
-              </a>
-            </span>
-          {% else %}
-            <span>
-              <a href='/'>
-                O.T.S
-              </a>
-            </span>
-          {% endif %}
-        </div>
+      <div class='logo pull-left' id='logo'>
+        {% if session.group %}
+          <a href='/'>
+            {{ session.group.name }}
+          </a>
+        {% else %}
+          <a href='/'>
+            O.T.S
+          </a>
+        {% endif %}
       </div>
+      {% if session.user %}
+        <div class='user pull-right'>
+          <a href="{{url_for('users')}}">{{ session.user.name }}</a>
+        </div>
+      {% endif %}
+    </div>
     </header>
     <article class='content'>
       {% block content %}
