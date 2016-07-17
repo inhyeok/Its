@@ -1,7 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto);
-@import url(https://fonts.googleapis.com/css?family=Pacifico);
 @import url(https://fonts.googleapis.com/css?family=Indie+Flower);
-@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 body{
   background-color: #ECF0F1;
@@ -13,13 +10,6 @@ body{
   margin: 0;
 }
 
-.icon {
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-  width: 100%;
-  height: 100%;
-}
 .image {
   background-size: cover;
   background-repeat: no-repeat;
@@ -56,10 +46,11 @@ body{
 
 .landing-header-desc {
   z-index: 1001;
-  height: 100%;
-  position: relative;
-  padding-top: 14rem;
-  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .landing-header-desc span{
@@ -72,26 +63,7 @@ body{
   margin: 7em 0;
 }
 
-.landing-body .icon {
-  width: 150px;
-  height: 150px;
-  display: inline-block;
-  margin-right: 2rem;
-  float: left;
-  display: inline-block;
-}
-
 .landing-body .item {
   display: inline-block;
   padding-bottom: 7rem;
-}
-
-@media screen and (max-width: 480px) {
-  .landing-header-desc{
-    padding-top: 17.5rem;
-  }
-
-  .landing-header-desc span{
-    font-size: 7rem;
-  }
 }
