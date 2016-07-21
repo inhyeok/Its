@@ -49,6 +49,7 @@ $(function () {
     dayClick: function (date) {
       $('#myModal .form-control').val('');
       $('#eventStart').val(moment(date).format('YYYY-MM-DD HH:mm'));
+      $('#eventFinish').val(moment(date).add(1, 'days').format('YYYY-MM-DD HH:mm'));
       $('#eventMethod').val('POST');
       $('#myModal').modal('show');
     },
