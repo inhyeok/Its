@@ -22,18 +22,19 @@ h2 {
   height: 100%;
 }
 
-.btn-default{
+.btn-default {
   color: #3498DB;
   background: #ECF0F1;
-  border: none;
+  border: 1px solid #ccc;
 }
-.btn-default:hover{
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default:active:focus {
   color: #2C3E50;
   background: #ECF0F1;
-}
-.btn-default:focus{
-  color: #3498DB;
-  background: #ECF0F1;
+  outline: none;
 }
 
 .landing {

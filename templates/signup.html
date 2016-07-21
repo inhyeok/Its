@@ -7,7 +7,7 @@
 
 {% block content %}
   <div class='row'>
-    <div class='col-sm-4 col-sm-offset-4'>
+    <div class='col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 bg-white' style='padding: 20px 15px;'>
       <form id='signupForm' action="{{url_for('signup')}}" method='POST'>
         <div class='form-group text-center'>
           <h4>Sing up</h4>
@@ -51,9 +51,9 @@
           <input type='text' id='groupCode' name='group_code' class='form-control' placeholder="Your Group Code" />
           <span class='text-info small'>(If you don't have a group, You should make a group after signup.)</span>
         </div>
-        <div class='form-group'>
-          <button type='submit' class='btn btn-default'>Submit</button>
-          <a href='/' class='btn btn-default pull-right'>Back</a>
+        <div class='form-group text-right'>
+          <a href='/' class='btn btn-default'>Back</a>
+          <button type='submit' class='btn btn-primary'>Submit</button>
         </div>
       </form>
     </div>

@@ -1,7 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto);
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
-body{
+body {
   // background-color: #FAFAFA;
   background-color: #ECF0F1;
   font-family: 'Roboto', 'nanumgothic', sans-serif;
@@ -37,6 +37,25 @@ body{
   color: #D72E2B;
 }
 
-.form-group label.form-label{
+.form-group label.form-label {
   line-height: 34px;
+}
+
+.btn-default {
+  color: #3498DB;
+  background: #ECF0F1;
+  border: 1px solid #ccc;
+}
+
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default:active:focus {
+  color: #2C3E50;
+  background: #ECF0F1;
+  outline: none;
+}
+
+.bg-white {
+  background-color: #fff;
 }
