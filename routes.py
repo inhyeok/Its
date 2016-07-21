@@ -94,23 +94,39 @@ def signup():
 
 @app.route('/events', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def events():
-  event_item = request.form
   if request.method == 'POST':
-    EventList.insert().execute(title=event_item['event_title'], content=event_item['event_content'], group_id=session['group']['id'], user_id=session['user']['id'], started_at=event_item['event_started_at'], finished_at=event_item['event_finished_at'], color= event_item['event_color'], created_at= 'NOW()')
+    event = request.form
+    try:
+      EventList.insert().execute(title=event['event_title'], content=event['event_content'], group_id=session['group']['id'], user_id=session['user']['code'], started_at=event['event_started_at'], finished_at=event['event_finished_at'], color= event['event_color'], created_at= 'NOW()')
+    except Exception, e:
+      return jsonify({'status': 500, 'message': e})
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'PUT':
-    EventList.update(EventList.c.id == event_item['event_id']).execute(title=event_item['event_title'], content=event_item['event_content'], started_at=event_item['event_started_at'], finished_at=event_item['event_finished_at'], color= event_item['event_color'], updated_at= 'NOW()')
+    event = request.form
+    try:
+      EventList.update(EventList.c.id == event['event_id']).execute(title=event['event_title'], content=event['event_content'], started_at=event['event_started_at'], finished_at=event['event_finished_at'], color= event['event_color'], updated_at= 'NOW()')
+    except Exception, e:
+      return jsonify({'status': 500, 'message': e})
     return jsonify({'status': 200, 'message': '성공'})
 
   elif request.method == 'DELETE':
-    return True
+    event = request.form
+    print event['event_id'], '>>>>>>>>>>>>>>>>'
+    try:
+      EventList.delete(EventList.c.id == event['event_id']).execute()
+    except Exception, e:
+      return jsonify({'status': 500, 'message': e})
+    return jsonify({'status': 200, 'message': '삭제성공'})
 
-  result = EventList.select(session['group']['id'] == EventList.c.group_id).execute()
-  event_items = []
+  try:
+    result = EventList.select(session['group']['id'] == EventList.c.group_id).execute()
+  except Exception, e:
+    return jsonify({'status': 500, 'message': e})
+  events = []
   for item in result:
-    event_items.append(dict(item))
-  return jsonify({'status': 200, 'message': '성공', 'items': event_items})
+    events.append(dict(item))
+  return jsonify({'status': 200, 'message': '성공', 'items': events})
 
 @app.route('/users', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def users():
@@ -130,12 +146,15 @@ def group():
   if request.method == 'POST':
     group_name = request.form['group_name']
     group_code = request.form['group_code']
-    group_code_check = GroupList.select(GroupList.c.name == group_name).execute().first()
-    if group_code_check:
-      return jsonify({'status': 204, 'message': '이미 사용중인 그룹이름입니다.'})
-    GroupList.insert().execute(name=group_name, code=group_code)
-    group_info = GroupList.select(GroupList.c.code == group_code).execute().first()
-    Users.update(Users.c.code == session['user']['code']).execute(group_id=group_info['id'])
+    try:
+      group_code_check = GroupList.select(GroupList.c.name == group_name).execute().first()
+      if group_code_check:
+        return jsonify({'status': 204, 'message': '이미 사용중인 그룹이름입니다.'})
+      GroupList.insert().execute(name=group_name, code=group_code)
+      group_info = GroupList.select(GroupList.c.code == group_code).execute().first()
+      Users.update(Users.c.code == session['user']['code']).execute(group_id=group_info['id'])
+    except Exception, e:
+      return jsonify({'status': 500, 'message': e})
     session['user']['group_id'] = group_info['id']
     session['group'] = dict(group_info)
     session['group_users'] = [session['user']]

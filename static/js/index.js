@@ -52,6 +52,7 @@ $(function () {
       $('#eventFinish').val(moment(date).add(1, 'days').format('YYYY-MM-DD HH:mm'));
       $('#eventMethod').val('POST');
       $('#myModal').modal('show');
+      $('#eventDelete').css('display', 'none')
     },
     eventClick: function (e) {
       $('#eventId').val(e.id);
@@ -62,6 +63,7 @@ $(function () {
       $('#eventColor').val(e.color);
       $('#eventMethod').val('PUT');
       $('#myModal').modal('show');
+      $('#eventDelete').css('display', 'inherit')
       // for(var i = 0; i < $('#eventUpdateColors > svg > rect').length; i++){
       //   console.log($('#eventUpdateColors > svg > rect')[i]);
       //   if($('#eventColor').val() === ){
@@ -129,7 +131,8 @@ $(function () {
     }
   });
 
-  $('#eventUpdate').on('submit', function () {
+  __ = $('#eventUpdate')
+  __.on('submit', function () {
     $this = $(this);
     if(!moment($this.find($('#eventStart')).val(), 'YYYY-MM-DD HH:mm', true).isValid() || !moment($this.find($('#eventFinish')).val(), 'YYYY-MM-DD HH:mm', true).isValid()){
       sw_alert('error', '시간 입력 형식을 다시 확인해주세요.');
@@ -161,6 +164,47 @@ $(function () {
     })
     return false
   });
+
+  __ = $('#eventDelete')
+  __.on('click', function () {
+    swal({
+      title: 'Warning',
+      type: 'warning',
+      text: 'You will not be able to recover this event item.\nAre you delete event item??',
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55"
+    }
+    , function () {
+        event = {
+          'event_id': Number($('#eventId').val())
+        }
+        $.ajax({
+          url: '/events',
+          type: 'delete',
+          data: event,
+          dataType: 'json',
+          success: function (req) {
+            console.log(req);
+            if(req.status === 200){
+              setTimeout(function () {
+                sw_alert('success', req.message);
+              }, 150)
+              $('#myModal').modal('hide');
+              return true
+            }
+            else {
+              setTimeout(function () {
+                sw_alert('error', req.message);
+              }, 150)
+            }
+          },
+          error: function (err) {
+            console.log(err);
+          }
+        })
+      }
+    )
+  })
 
   __ = $('#eventUpdateColors > svg > rect')
   __.on('click', function () {
