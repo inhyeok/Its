@@ -112,7 +112,6 @@ def events():
 
   elif request.method == 'DELETE':
     event = request.form
-    print event['event_id'], '>>>>>>>>>>>>>>>>'
     try:
       EventList.delete(EventList.c.id == event['event_id']).execute()
     except Exception, e:

@@ -25,7 +25,8 @@ body {
 
 .content {
   z-index: 1;
-  padding: calc(3.5rem + 60px) 3.5rem;
+  // padding: calc(3.5rem + 60px) 3.5rem;
+  padding: 60px 3.5rem;
 }
 
 .text-muted {
@@ -57,6 +58,11 @@ body {
 }
 
 .bg-white {
+  padding: 20px 15px;
   background-color: #fff;
   border-radius: 1rem;
 }
+
+// h2.main-title {
+//   margin-top: 0;
+// }
