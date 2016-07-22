@@ -221,6 +221,6 @@ $(function () {
       text: message,
       showConfirmButton: false,
       timer: 700
-    })
+    }).done();
   }
 });

@@ -35,7 +35,9 @@ $(function () {
     swal({
       title: type,
       type: type,
-      text: message
-    });
+      text: message,
+      showConfirmButton: false,
+      timer: 700
+    }).done();
   }
 });
