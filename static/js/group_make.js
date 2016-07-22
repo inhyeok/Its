@@ -25,7 +25,6 @@ $(function () {
         },
         error: function (err) {
           sw_alert('error', err);
-          console.log(err);
         }
       });
     }

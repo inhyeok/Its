@@ -148,11 +148,12 @@ $(function () {
       data: $this.serialize(),
       dataType: 'json',
       success: function (req) {
-        console.log(req);
         if(req.status === 200){
-          sw_alert('success', req.message);
-          $('#myModal').modal('hide');
-          return true
+          sw_alert('success', req.message)
+          .then(function () {
+            $('#myModal').modal('hide');
+            return true
+          })
         }
         else {
           sw_alert('error', req.message);
@@ -173,37 +174,31 @@ $(function () {
       text: 'You will not be able to recover this event item.\nAre you delete event item??',
       showCancelButton: true,
       confirmButtonColor: "#DD6B55"
-    }
-    , function () {
-        event = {
-          'event_id': Number($('#eventId').val())
-        }
-        $.ajax({
-          url: '/events',
-          type: 'delete',
-          data: event,
-          dataType: 'json',
-          success: function (req) {
-            console.log(req);
-            if(req.status === 200){
-              setTimeout(function () {
-                sw_alert('success', req.message);
-              }, 150)
-              $('#myModal').modal('hide');
-              return true
-            }
-            else {
-              setTimeout(function () {
-                sw_alert('error', req.message);
-              }, 150)
-            }
-          },
-          error: function (err) {
-            console.log(err);
-          }
-        })
+    })
+    .then(function () {
+      event = {
+        'event_id': Number($('#eventId').val())
       }
-    )
+      $.ajax({
+        url: '/events',
+        type: 'delete',
+        data: event,
+        dataType: 'json',
+        success: function (req) {
+          if(req.status === 200){
+            sw_alert('success', req.message);
+            $('#myModal').modal('hide');
+            return true
+          }
+          else {
+            sw_alert('error', req.message);
+          }
+        },
+        error: function (err) {
+          console.log(err);
+        }
+      })
+    })
   })
 
   __ = $('#eventUpdateColors > svg > rect')
@@ -224,8 +219,8 @@ $(function () {
       title: type,
       type: type,
       text: message,
+      showConfirmButton: false,
       timer: 700
-    });
+    })
   }
-
 });

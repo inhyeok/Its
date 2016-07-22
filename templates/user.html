@@ -9,14 +9,19 @@
 {% endblock %}
 
 {% block content %}
-  <h2 class='main-title'>Members</h2>
+  <h4 class='main-title'>Members</h4>
   <div class='bg-white'>
     <div class='row'>
       {% for item in session.group_users %}
-        <div class='col-lg-3 col-sm-4 col-xs-6'>
+        <div class='col-lg-3 col-sm-4'>
           <div class="panel panel-default">
             <div class="panel-heading">
-              <h3 class="panel-title">{{item.name}}</h3>
+              <h3 class="panel-title">
+                {{item.name}}
+                {% if session.user.code ==  item.code %}
+                  <span class="label label-primary pull-right">ME</span>
+                {% endif %}
+              </h3>
             </div>
             <div class="panel-body">
               <p>{{item.id}}</p>
