@@ -36,6 +36,29 @@
       {% block content %}
       {% endblock %}
     </article>
+    {% if session.group %}
+      <div class='side' data-side-open='false'>
+        <div class='side-label'>
+          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+        </div>
+        <div class='side-content'>
+          <div class='list-group'>
+            <h4 class='main-title list-group-item active'>Members</h4>
+            <button type="button" class="list-group-item">
+              <span class="label label-primary pull-right">ME</span>
+              {{session.user.name}}
+            </button>
+            {% for item in session.group_user_list %}
+              {% if session.user.code != item.code %}
+                <button type="button" class="list-group-item">
+                  {{item.name}}
+                </button>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
 
     <script type="text/javascript" src="{{url_for('static', filename='bower_components/jquery/dist/jquery.min.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='bower_components/bootstrap/dist/js/bootstrap.min.js')}}"></script>
@@ -43,6 +66,7 @@
     <script type="text/javascript" src="{{url_for('static', filename='bower_components/moment/moment.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='bower_components/es6-promise/promise.min.js')}}"></script>
     <script type="text/javascript" src="{{url_for('static', filename='bower_components/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/main.js')}}"></script>
     {% block scripts %}{% endblock %}
   </body>
 </html>
