@@ -47,17 +47,21 @@ body {
   height: 41px;
   position: absolute;
   top: 0;
-  left: -41px;
+  left: -39px;
   background-color: #3498DB;
   z-index: 1003;
   cursor: pointer;
+  color: #fff;
+}
+
+.side .side-label:hover {
+  color: #2980B9;
 }
 
 .side .side-label span {
   line-height: 41px;
   text-align: center;
   width: 100%;
-  color: #2980B9;
 }
 
 .side .side-content {
@@ -79,6 +83,7 @@ body {
 .side .side-content .list-group .list-group-item.active{
   background-color: #3498DB;
   border-color: #3498DB;
+  padding-left: 0;
   // color: #ECF0F1;
 }
 
