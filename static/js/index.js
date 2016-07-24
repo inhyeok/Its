@@ -1,4 +1,32 @@
 $(function () {
+
+  get_event = function () {
+    $.ajax({
+      url: '/events',
+      type: 'GET',
+      success: function (req) {
+        if(req.status === 200) {
+          var events = [];
+          for(i in req.items) {
+            events.push({
+              id: req.items[i].id,
+              title: req.items[i].title,
+              content: req.items[i].content,
+              allDay: req.items[i].all_day,
+              start: moment(req.items[i].started_at).format('YYYY-MM-DD HH:mm'),
+              end: moment(req.items[i].finished_at).format('YYYY-MM-DD HH:mm'),
+              color: req.items[i].color
+            })
+          }
+          return events;
+        }
+      },
+      error: function (err) {
+        console.log(err);
+      }
+    });
+  }
+
   $('#calendar').fullCalendar({
     schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
     // googleCalendarApiKey: 'AIzaSyCxuLEwSrp8wC4y5uu6qm-L_mXeouAPWgs',
@@ -12,10 +40,13 @@ $(function () {
     },
     lang: 'ko',
     editable: true,
-    resizeable: true,
     eventStartEditable: true,
     eventDurationEditable: true,
     slotEventOverlap: false,
+    // events: get_event() || [],
+    // eventSources: {
+    //   events: get_event() || []
+    // },
     eventSources: [
       {
         events: function (s,e,t,c) {
@@ -31,8 +62,8 @@ $(function () {
                     title: req.items[i].title,
                     content: req.items[i].content,
                     allDay: req.items[i].all_day,
-                    start: req.items[i].started_at,
-                    end: req.items[i].finished_at,
+                    start: moment(req.items[i].started_at).format('YYYY-MM-DD HH:mm'),
+                    end: moment(req.items[i].finished_at).format('YYYY-MM-DD HH:mm'),
                     color: req.items[i].color
                   })
                 }
