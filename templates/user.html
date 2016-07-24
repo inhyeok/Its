@@ -9,28 +9,16 @@
 {% endblock %}
 
 {% block content %}
-  <h4 class='main-title'>Members</h4>
+  <h4 class='main-title'>Setting</h4>
   <div class='bg-white'>
-    <div class='row'>
-      {% for item in session.group_users %}
-        <div class='col-lg-3 col-sm-4'>
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">
-                {{item.name}}
-                {% if session.user.code ==  item.code %}
-                  <span class="label label-primary pull-right">ME</span>
-                {% endif %}
-              </h3>
-            </div>
-            <div class="panel-body">
-              <p>{{item.id}}</p>
-              <p>{{ item.phone or '연락처 없음' }}</p>
-            </div>
-          </div>
+    <form>
+      <div class='row'>
+        <div class='col-sm-4 form-group'>
+          <label>Name</label>
+          <input type="text" class='form-control' name="name" value='{{session.user.name}}' />
         </div>
-      {% endfor %}
-    </div>
+      </div>
+    </form>
     <a href="{{url_for('logout')}}">로그아웃</a>
   </div>
 {% endblock %}

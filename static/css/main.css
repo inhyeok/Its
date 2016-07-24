@@ -22,6 +22,10 @@ body {
   text-decoration: none;
 }
 
+.user a{
+  color: #ECF0F1;
+}
+
 .user .dropdown-menu{
   top: 50px;
   z-index: 1003;
