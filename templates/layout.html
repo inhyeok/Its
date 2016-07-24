@@ -33,11 +33,19 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="userDropdown">
             <li>
+              <a href="#">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                Team Settings
+              </a>
+            </li>
+            <li role="separator" class="divider"></li>
+            <li>
               <a href="{{url_for('users')}}">
                 <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
                 Your Settings
               </a>
-
+            </li>
+            <li>
               <a href="{{url_for('logout')}}">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
                 Logout
