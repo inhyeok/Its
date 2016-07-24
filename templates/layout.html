@@ -26,8 +26,19 @@
         {% endif %}
       </div>
       {% if session.user %}
-        <div class='user pull-right'>
-          <a href="{{url_for('users')}}">{{ session.user.name }}</a>
+        <div class="dropdown user pull-right">
+          <a href='#' class="dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            {{ session.user.name }}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="userDropdown">
+            <li>
+              <a href="#">
+                <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                Setting
+              </a>
+            </li>
+          </ul>
         </div>
       {% endif %}
     </div>

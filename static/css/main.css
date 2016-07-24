@@ -22,6 +22,11 @@ body {
   text-decoration: none;
 }
 
+.user .dropdown-menu{
+  top: 50px;
+  z-index: 1003;
+}
+
 .content {
   z-index: 1;
   padding: calc(3.5rem + 60px) 3.5rem;
@@ -33,7 +38,7 @@ body {
   height: calc(100% - 60px);
   right: -300px;
   top: 60px;
-  z-index: 1003;
+  z-index: 1002;
   -webkit-transition: ease-in-out 100ms;
   -o-transition: ease-in-out 100ms;
   transition: ease-in-out 100ms;
@@ -54,7 +59,6 @@ body {
   top: 0;
   left: -39px;
   background-color: #3498DB;
-  z-index: 1003;
   cursor: pointer;
   color: #fff;
 }
