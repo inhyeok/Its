@@ -2,7 +2,6 @@
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 
 body {
-  // background-color: #FAFAFA;
   background-color: #ECF0F1;
   font-family: 'Roboto', 'nanumgothic', sans-serif;
 }
@@ -18,7 +17,7 @@ body {
 }
 
 .header .logo a {
-  font-size: 15px;
+  font-size: 24px;
   color: #ECF0F1;
   text-decoration: none;
 }
@@ -26,7 +25,6 @@ body {
 .content {
   z-index: 1;
   padding: calc(3.5rem + 60px) 3.5rem;
-  // padding: 60px 3.5rem;
 }
 
 .side {
@@ -71,11 +69,30 @@ body {
   width: 100%;
 }
 
+.side .side-header {
+  width: 100%;
+  height: 41px;
+  background-color: #3498DB;
+  padding: 5px 15px;
+}
+
+.side .side-header input{
+  padding-left: 30px;
+}
+
+.side .side-header span{
+  margin: 5px 0;
+  left: 15px;
+  color: #2980B9;
+}
+
 .side .side-content {
   width: 100%;
   height: 100%;
   background-color: #fff;
   border-left: 2px solid #e4e4e4;
+  padding-bottom: 41px;
+  overflow-y: scroll;
 }
 
 .side .side-content .list-group .main-title {
@@ -86,6 +103,7 @@ body {
   border-radius: 0;
   border-left: none;
   border-right: none;
+  outline: none;
 }
 
 .side .side-content .list-group .list-group-item.active{

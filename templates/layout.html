@@ -37,13 +37,17 @@
       {% endblock %}
     </article>
     {% if session.group %}
-      <div class='side' data-side-open='false'>
+      <div class='side'>
         <div class='side-label'>
           <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
         </div>
+        <div class='side-header'>
+          <!-- Members -->
+          <input type="text" class='form-control input-sm' name="memberSearch" placeholder="Search Member" />
+          <span class="glyphicon glyphicon-search form-control-feedback" aria-hidden="true"></span>
+        </div>
         <div class='side-content'>
           <div class='list-group'>
-            <h4 class='main-title list-group-item active'>Members</h4>
             <button type="button" class="list-group-item">
               <span class="label label-primary pull-right">ME</span>
               {{session.user.name}}

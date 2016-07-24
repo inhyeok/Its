@@ -150,10 +150,8 @@ $(function () {
       success: function (req) {
         if(req.status === 200){
           sw_alert('success', req.message)
-          .then(function () {
-            $('#myModal').modal('hide');
-            return true
-          })
+          $('#myModal').modal('hide');
+          return true
         }
         else {
           sw_alert('error', req.message);
