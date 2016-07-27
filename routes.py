@@ -73,21 +73,17 @@ def signup():
     group_code_check = GroupList.select(GroupList.c.code == user['group_code']).execute().first()
     if group_code_check:
       user['group_id'] = group_code_check['id']
+      session['group'] = dict(group_code_check)
+      group_user_list = []
+      result = UserList.select(UserList.c.group_id == user['group_id']).execute()
+      for item in result:
+        group_user_list.append(dict(item))
+      session['group_user_list'] = group_user_list
+
     user['pw'] = hashlib.sha1(user['pw']+'enon').hexdigest()
     UserList.insert().execute(user)
-
-    # group_user_list = []
-    # session['user'] = dict(user)
-
-    # # Add user session
-    # if user['group_id'] != 0:
-    #   session['group'] = dict(group_code_check)
-    #   result = UserList.select(UserList.c.group_id == user['group_id']).execute()
-    #   for item in result:
-    #     group_user_list.append(dict(item))
-    #   session['group_user_list'] = group_user_list
-    # else:
-    #   session['group'] = {}
+    user = UserList.select(UserList.c.id == user['id']).execute().first()
+    session['user'] = dict(user)
 
     return jsonify({'status': 200, 'message': 'success'})
   return render_template('signup.html')
