@@ -28,8 +28,9 @@
       {% if session.user %}
         <div class="dropdown user pull-right">
           <a href='#' class="dropdown-toggle" id="userDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            {{ session.user.name }}
-            <span class="caret"></span>
+            <!-- {{ session.user.name }}
+            <span class="caret"></span> -->
+            <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span>
           </a>
           <ul class="dropdown-menu" aria-labelledby="userDropdown">
             <li>
@@ -72,10 +73,10 @@
         </div>
         <div class='side-content'>
           <div class='list-group'>
-            <button type="button" class="list-group-item">
+            <a href="{{url_for('users')}}" class="list-group-item">
               <span class="label label-primary pull-right">ME</span>
               {{session.user.name}}
-            </button>
+            </a>
             {% for item in session.group_user_list %}
               {% if session.user.code != item.code %}
                 <button type="button" class="list-group-item">
