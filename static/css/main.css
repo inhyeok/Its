@@ -45,6 +45,21 @@ body {
   padding: calc(3.5rem + 60px) 3.5rem;
 }
 
+.main-title {
+  position: relative;
+  width: 100%;
+}
+
+.main-title .main-title-menu {
+  position: absolute;
+  right: 0px;
+  top: -5px;
+}
+
+.main-title .main-title-menu button{
+  font-size: 11px;
+}
+
 .side {
   position: fixed;
   width: 300px;
@@ -162,4 +177,5 @@ body {
   background-color: #fff;
   border-radius: 1rem;
   border: 1px solid #ccc;
+  margin-bottom: 20px;
 }
